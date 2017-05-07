@@ -82,8 +82,8 @@
 
 
             var xAxis = d3.svg.axis().scale(x).orient("top");
-
-            var max_pose_length = 7;
+            var max_pose_length;
+            
 
             // get the data via an asynchronous call, then call our updateVis function
             // see <https://github.com/d3/d3-3.x-api-reference/blob/master/Requests.md#d3_json>
@@ -92,13 +92,12 @@
             //   Python's HTTP Server: `python -m SimpleHTTPServer`.
             // anonymous function here is a call back function and will execute after the d3.json function excuted 
             d3.json("../../SimpleData/20x10.json", function(error, data) {
-                // findmax(data);
                 updateVis(data);
 
             });
             function updateVis(data) {
-
-            	
+                max_pose_length = 7
+            	findmax(data)
                 // update the scales now that we know domain variables
                	x.domain(d3.range(0, data.assignments.length));
 
@@ -205,10 +204,9 @@
             }
             function findmax(data) {
             	for(var i=0; i < data.students.length; i++) {
-            		var count = 0;
-            		for(var j=0; j<data.students.grades.length; j++){
-            			if(count > max_pose_length) {
-            				max_pose_length = count;
+            		for(var j=0; j<data.students[i].grades.length; j++){
+            			if(data.students[i].grades[j].posts.length > max_pose_length) {
+            				max_pose_length = data.students[i].grades[j].posts.length;
             			}
             		}
             	}
