@@ -1,12 +1,5 @@
-<!--
-This file is for CS765 grading purpose and is based on Aplper Sarikaya's script.
-
-Thanks to Alper Sarikaya's script which is D3 part of this file and this 
-file is only for the CS765 grading system Design chanllenge project.
--->
-
 <!DOCTYPE html>
-    <meta charset="utf-8">
+<meta charset="utf-8">
 
     <!-- if we had axes, this would be needed to style them correctly -->
     <style>
@@ -29,66 +22,38 @@ file is only for the CS765 grading system Design chanllenge project.
             margin: auto;
             float:right;
         }
-        
     </style>
-
     <head>
         <title > CS765 Design Challenge 3</title>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="teacher.css">
     </head>
-    
     <body>
-        <header class = "top-header" id="webiste_header">
-            <h1 style="text-align:center">Design Challenge 3: Data Visualization <br/>  </h1>
-            <h4 style="text-align:center"> Ying Li <br/> li528@wisc.edu</h4>
+    	<header class = "top-header" id="webiste_header">
+            <h1 style="text-align:center">Grading System--Teacher Perspective <br/> </h1>
+            <h3 style="text-align:center"> author: Ying Li  {li528@wisc.edu} </h3>
             <nav style="text-align:center" class="top-nav">
-                <a style="text-align:center" href="">[Teacher Perspective]</a>
-                <a style="text-align:center" href="">[Student Perspective]</a>
-                <a style="text-align:center" href="">[Course Invistigator Perspective]</a>
-                <a style="text-align:center" href="">[About]</a>
-            </nav>
-            <span id="welcome-msg">Welcome to grade us!</span>
+                <a style="text-align:center" href="">[Active Discussion Overview]</a>
+                <a style="text-align:center" href="late.html">[Late Submission Overview] </a>
+                <a style="text-align:center" href="">[Discussion Length Overview]</a>
+                <a style="text-align:center" href="">[Personel Data Analysis]</a>
+				<a style="text-align:center" href="../index.html">[Back to Initial Page]</a>
+            </nav>    
         </header>
-        <div class = "container">
-            <header>
-                <p style="text-align:center">
-                    <span>CS765 Spring 2017</span>
-                    <br /> Grading System
-                </p>
-            </header>
-            <!-- <div style="text-align:center" id="login-form">
-                <label for="username">Username:</label>
-                <input id="username" name="username" type="text">
-                <label for="password">Password:</label>
-                <input id="password" name="password" type="password">
-                <button id="login-btn">Login</button>
-                <p id="login-error"></p>
-            </div> -->
-        </div>
-        <aside id="perspective-nav">
-        <nav class="main-nav">
-          <a href="teacher/teacher.html" id="teacher-btn" class="main-nav-btn active">
-            <i class="fa fa-tasks" aria-hidden="true"></i> Teacher
-          </a>
-          <a href="heatmap/heat.html" id="student-btn" class="main-nav-btn">
-            <i i class="fa fa-graduation-cap" aria-hidden="true"></i> Student
-          </a>
-          <a href="#" id="about-btn" class="main-nav-btn">
-            <i class="fa fa-eye" aria-hidden="true"> </i> About
-          </a>
-        </nav>
-      </aside>
+        <header class = "second-header" id="svg_header">
+            <h1 style="text-align:left">Person Name : </h1>
+            <h3 style="text-align:center"> Grade of Submissions </h3>
+        </header>
     <section class = "main_section">
         <div class = "assignments_score" >
         <script src="//d3js.org/d3.v3.min.js"></script>
         <script id = "assignment">
 
             // so we don't accidentally write things off of the canvas, give us a little breathing room
-            var margins = {top: 40, right: 20, bottom: 40, left: 20};
+            var margins = {top: 100, right: 20, bottom: 40, left: 20};
             // modifying these variables should neatly update everything else
-            var width = window.innerWidth;
+            var width = 2 * window.innerWidth;
             var height = window.innerHeight;
             var txtWidth = 200;
             var visWidth = width - txtWidth;
@@ -111,35 +76,47 @@ file is only for the CS765 grading system Design chanllenge project.
                 .rangeRoundBands([0, visWidth], 0.3);
 
 
-            var xAxis = d3.svg.axis().scale(x).orient("top");
-
-
-
             // scale for determining name positions
             var y = d3.scale.ordinal()
                 .rangeRoundBands([0, height], 0.1);
+
+
+            var xAxis = d3.svg.axis().scale(x).orient("top");
+
+            var max_pose_length = 7;
+
             // get the data via an asynchronous call, then call our updateVis function
             // see <https://github.com/d3/d3-3.x-api-reference/blob/master/Requests.md#d3_json>
             // NOTE: you must run this page from within a webserver to get this to work (security concerns)
             //   use something like <https://www.npmjs.com/package/http-server> or 
             //   Python's HTTP Server: `python -m SimpleHTTPServer`.
             // anonymous function here is a call back function and will execute after the d3.json function excuted 
-            d3.json("../SimpleData/20x10.json", function(error, data) {
+            d3.json("../../SimpleData/20x10.json", function(error, data) {
+                // findmax(data);
                 updateVis(data);
+
             });
             function updateVis(data) {
+
+            	
                 // update the scales now that we know domain variables
-                x.domain(d3.range(0, data.assignments.length));
+               	x.domain(d3.range(0, data.assignments.length));
+
                 //the map() method creates a new array with the results of calling a provided function on every element in this array.
+
                 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map?v=example
                 //this will simply generate a new array based on the old array assign sortable_name for each student to y axis
                 y.domain(
                     data.students.map(
-                        function(d) {
-                         return d.sortable_name; 
+                        function(d,i) {
+                        	return d.sortable_name; 
                         }
                     )
                 );
+				var assignments_name = data.assignments.map(
+            		function(d, i){
+            			return d[i];
+            	});
                 // now, create a group for each student
                 // see <https://bost.ocks.org/mike/selection/> and <https://bost.ocks.org/mike/join/>
                 //   for information on how data joins work -- since we're only adding data, we jump straight to data().enter(); we don't care about updating existing data or removing old data.  
@@ -172,7 +149,7 @@ file is only for the CS765 grading system Design chanllenge project.
                 // create a scale to manage the width of the rectangle, 
                 // which communicates the # of posts made for an assignment
                 var posts = d3.scale.linear()
-                    .domain([0, 11])
+                    .domain([0, max_pose_length])
                     .range([0, x.rangeBand()])
                     .clamp(false);
                 // draw the box that communicates the number of posts;
@@ -190,8 +167,8 @@ file is only for the CS765 grading system Design chanllenge project.
                         //return colorScale(d.posts.length);
                         return colorCalibration[student.posts.length];
                     })
-                
-               
+                var str1="DC";
+                var str2="SF";
                
                 // the score for each assignment; color red if the assignment was late
                 assignments.append('text')
@@ -200,29 +177,47 @@ file is only for the CS765 grading system Design chanllenge project.
                     .style('fill', function(d) { 
                         return d.late > 0 ? '#e41a1c' : 'white'; 
                     })
-                    .style('font-weight', function(d) {
+                    .style('font-weight', function(d, i) {
                         return d.late > 0 ? 'bold' : 'normal;'
                     })
-                    .style('font-family', function(d) {
+                    .style('font-family', function(d, i) {
                         return d.late > 0 ? 'times' : 'sans-serif';
                     })
 
-                    .text(function(d) { return d.late > 0? d.score : d.score; })
-                    ;   //+ ' ' +  d.late + ' hr': d.score
+                    .text(function(d , i) { 
+                    	return d.score + " " + data.assignments[i].name }
+                    ); 
 
-                svg.append("g")
+    			svg.append("g")
                     .attr("class", "x_axis")
                     .attr('transform', 'translate(' + txtWidth+ ',-20)')
-                    .call(xAxis)
-                    .style('fill', function(d){
-                        return d.id > 0 ? 'whilte ': 'black';
-                    })
-                    .text(function (d) {
-                        return data.assignments[d].id;
-                    });
-                
-
+                    .call(xAxis);
+                svg.append("text")
+                    .attr("transform","translate(" + width/2 + " ," + margins.top+200 + ")")
+                    .style("text-anchor", "middle")
+                    .style("fill","wihte")
+                    .text("Wo shi shui");
+                var legend = svg.selectAll(".legend")
+                					.data(assignments_name)
+                					.enter().append("g")
+                					.attr("class","legend")
+                					.attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
             }
+            function findmax(data) {
+            	for(var i=0; i < data.students.length; i++) {
+            		var count = 0;
+            		for(var j=0; j<data.students.grades.length; j++){
+            			if(count > max_pose_length) {
+            				max_pose_length = count;
+            			}
+            		}
+            	}
+            }
+
+            function customXAxis(g) {
+  				g.call(xAxis);
+  				g.select(".domain").remove();
+			}
 
             function renderColorForLate() {
 
@@ -233,5 +228,5 @@ file is only for the CS765 grading system Design chanllenge project.
 
         </script>
     </div>
-      <script src="main.js"></script>
+      
 </section>
