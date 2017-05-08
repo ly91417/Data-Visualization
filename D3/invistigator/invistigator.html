@@ -1,9 +1,3 @@
-<!--
-This file is for CS765 grading purpose and is based on Aplper Sarikaya's script.
-
-Thanks to Alper Sarikaya's script which is D3 part of this file and this 
-file is only for the CS765 grading system Design chanllenge project.
--->
 
 <!DOCTYPE html>
     <meta charset="utf-8">
@@ -29,62 +23,47 @@ file is only for the CS765 grading system Design chanllenge project.
             margin: auto;
             float:right;
         }
-        
     </style>
+
     <head>
         <title > CS765 Design Challenge 3</title>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
-
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="main.css">
-        
-
+        <link rel="stylesheet" href="student.css">
     </head>
     
     <body>
         <header class = "top-header" id="webiste_header">
-            <h1 style='font-size:25px'>Design Challenge 3: CS765 Data Visualization<br/>  </h1>
-            <nav style="text-align:center;" class="top-nav">
-                <a style="text-align:center" href="http://graphics.cs.wisc.edu/WP/vis17/2017/04/07/design-challenge-3-a-real-problem/">[Project Description]</a>
-                <a style="text-align:center" href="http://graphics.cs.wisc.edu/WP/vis17/course-announcement/">[Course Description]</a>
-                <a style="text-align:center" href="invistigator/invistigator.html">[CS Dean's Perspective]</a>
-                <a style="text-align:center" href="about/about.html">[About]</a>
-            </nav>
-            <span id="welcome-msg">Welcome to grade us!</span>
+            <h1 style="text-align:center">Grading System--Student Perspective <br/> </h1>
+            <h3 style="text-align:center"> author: Ying Li  {li528@wisc.edu} </h3>
+            <nav style="text-align:center" class="top-nav">
+                <a style="text-align:center" href="">[Scoring Overview]</a>
+                <a style="text-align:center" href="late.html">[Late Submission Overview] </a>
+                <a style="text-align:center" href="">[Discussion Length Overview]</a>
+                <a style="text-align:center" href="">[Personel Data Analysis]</a>
+                <a style="text-align:center" href="../index.html">[Back to Initial Page]</a>
+            </nav>    
         </header>
-        <div class = "container">
-            <header>
-                <p style="text-align:center; font-size:36px">
-                    <span>CS765 Spring 2017</span>
-                    <br /> Grading System
-                </p>
-            </header>
-            <div style="text-align:center; color:white" id="login-form">
-                <label for="username">Username:</label>
-                <input id="username" name="username" type="text">
-                <label for="password">Password:</label>
-                <input id="password" name="password" type="password">
-                <button id="login-btn">Login</button>
-                <p id="login-error"></p>
-            </div>
-        </div>
+        <header class = "second-header" id="svg_header">
+            <h1 style="text-align:left">Person Name : </h1>
+            <h3 style="text-align:center"> Grade of Submissions </h3>
+        </header>
+            
         <aside id="perspective-nav">
-        <nav class="navbar navbar-inverse visible-xs">
-          <a href="teacher/index.html" id="teacher-btn" class="main-nav-btn">
+        <nav class="main-nav">
+          <a href="../teacher/index.html" id="teacher-btn" class="main-nav-btn">
             <i class="fa fa-tasks" aria-hidden="true"></i> Teacher
           </a>
-          <a href="student/index.html" id="student-btn" class="main-nav-btn">
+          <a href="" id="student-btn" class="main-nav-btn  active">
             <i i class="fa fa-graduation-cap" aria-hidden="true"></i> Student
           </a>
-          <a href="about/about.html" id="about-btn" class="main-nav-btn">
+          <a href="#" id="about-btn" class="main-nav-btn">
             <i class="fa fa-eye" aria-hidden="true"> </i> About
           </a>
         </nav>
       </aside>
     <section class = "main_section">
-        <!-- <div class = "assignments_score" >
+        <div class = "assignments_score" >
         <script src="//d3js.org/d3.v3.min.js"></script>
         <script id = "assignment">
 
@@ -127,7 +106,7 @@ file is only for the CS765 grading system Design chanllenge project.
             //   use something like <https://www.npmjs.com/package/http-server> or 
             //   Python's HTTP Server: `python -m SimpleHTTPServer`.
             // anonymous function here is a call back function and will execute after the d3.json function excuted 
-            d3.json("../SimpleData/20x10.json", function(error, data) {
+            d3.json("../../SimpleData/20x10.json", function(error, data) {
                 updateVis(data);
             });
             function updateVis(data) {
@@ -235,106 +214,6 @@ file is only for the CS765 grading system Design chanllenge project.
             }
 
         </script>
-    </div> -->
-    <div style>
-        <h1 style="text-anchor: center; text-align: center; color:#fbaf41">The Design Principles</h1>
-        <p style="font-family: serif; text-align:left; font-size:18px; color:#f5af41;">This System is designed for grading purpose for CS765 Data Visualization of UW-Madison students. The grading system use data of homework which including Discussion and Seek and Find two parts. For discussion tasks, students need to provide inforamtion about the homework and reading also the understanding of class material. The discussion task proceeds by finishing required several postings and a limited group of people randomly assigned will have acess to the postings and comments. The seek and find task is aming to present a good or not-that-good visualization from sources. And the critique need to be supplied with that.<br/>
-        <br/>
-        The sytstem has three views two of them are mostly used are: Teacher's perspective and Student's perspective. For teaher's view, the task is to:
-        <div class="table-responsive">
-            <table style="text-align:center;font-size:16x; color:#f5af41;" class="table">
-                
-                <thead style="font-size:20px">         
-                <tr>
-                    <td>#</td>
-                    <td><span><bold>Tasks for Teacher's View</bold></span></td>
-                    <td><span><bold>Implementation</bold></span></td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Show number of postings for each discussion and seek and find task for students</td>
-                    <td>Please clik the: <a href="teacher/index.html">the link</a></td>
-                </tr>
-                    <td>2</td>
-                    <td>Show discussion length of postings for each student and compare to peer condition</td>
-                    <td>Please clik the: <a href="teacher/index.html">the link</a></td>
-                <tr>
-                    <td>3</td>
-                    <td>Compare number of postings for each assignment between students</td>
-                    <td>Please clik the: <a href="teacher/index.html">the link</a></td>
-                </tr>
-                    <td>4</td>
-                    <td>Show scores of assignments for each student</td>
-                    <td>Please clik the: <a href="teacher/index.html">the link</a></td>
-                <tr>
-                    <td>5</td>
-                    <td>Show aggregated score of assignments for each student</td>
-                    <td>Please clik the: <a href="teacher/index.html">the link</a></td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td> Explore the data variation for each student through semester</td>
-                    <td>Please clik the: <a href="teacher/index.html">the link</a></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <p style="font-family: serif; text-align:left; font-size:18px; color:#f5af41;"> <br/>For student's view, the task is to: </p>
-        <div class="table-responsive">
-            <table style="text-align:center;font-size:16x; color:#f5af41;" class="table">
-                
-                <thead style="font-size:20px">         
-                <tr>
-                    <td>#</td>
-                    <td><span><bold>Tasks for Student's View</bold></span></td>
-                    <td><span><bold>Implementation</bold></span></td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Show scores of postings for each discussion and seek and find task for the student</td>
-                    <td>Please clik the: <a href="teacher/index.html">the link</a></td>
-                </tr>
-                    <td>2</td>
-                    <td>Show posting length of postings for each student and compare to peer condition</td>
-                    <td>Please clik the: <a href="teacher/index.html">the link</a></td>
-                <tr>
-                    <td>3</td>
-                    <td>Show all late submissions</td>
-                    <td>Please clik the: <a href="teacher/index.html">the link</a></td>
-                </tbody>
-            </table>
-        </div>
-        <p style="font-family: serif; text-align:left; font-size:18px; color:#f5af41;"> <br/>
-        <span style="font-family: times; text-align:center; font-size:20x; color:#f5af41;"> For CS dean or the instructor, he/she may want to understand how the people are behaving during the semester and what is interesting pattern if any exsisting in the past semester. The task is to: </p>
-        <div class="table-responsive">
-            <table style="text-align:center;font-size:16x; color:#f5af41;" class="table">
-                
-                <thead style="font-size:20px">         
-                <tr>
-                    <td>#</td>
-                    <td><span><bold>Tasks for CS Dean's View</bold></span></td>
-                    <td><span><bold>Implementation</bold></span></td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Explore the submission pattern for students' assignment</td>
-                    <td>Please clik the: <a href="teacher/index.html">the link</a></td>
-                </tr>
-                    <td>2</td>
-                    <td>Show posting lengths of Assignments and Variation through time</td>
-                    <td>Please clik the: <a href="teacher/index.html">the link</a></td>
-                <tr>
-                    <td>3</td>
-                    <td>Show all Scores of Students Assignments</td>
-                    <td>Please clik the: <a href="teacher/index.html">the link</a></td>
-                </tbody>
-            </table>
-        </div>
-            <script src="main.js"></script>
-        </section>
+    </div>
+      <script src="student.js"></script>
+</section>

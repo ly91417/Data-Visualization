@@ -23,6 +23,12 @@
             margin: auto;
             float:right;
         }
+        .ramp{
+            width:60px;
+            height: 60px;
+            float: left;
+            margin: 2px;
+        }
         
     </style>
 
@@ -30,19 +36,19 @@
         <title > CS765 Design Challenge 3</title>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="student.css">
+        <link rel="stylesheet" href="teacher.css">
     </head>
     
     <body>
         <header class = "top-header" id="webiste_header">
-            <h1 style="text-align:center">Grading System--Student Perspective <br/> </h1>
+            <h1 style="text-align:center">Grading System--Teacher Perspective <br/> </h1>
             <h3 style="text-align:center"> author: Ying Li  {li528@wisc.edu} </h3>
             <nav style="text-align:center" class="top-nav">
-                <a style="text-align:center" href="">[Scoring Overview]</a>
-                <a style="text-align:center" href="late.html">[Late Submission Overview] </a>
-                <a style="text-align:center" href="">[Discussion Length Overview]</a>
-                <a style="text-align:center" href="">[Personel Data Analysis]</a>
-                <a style="text-align:center" href="../index.html">[Back to Initial Page]</a>
+                <a style="text-align:center" href="">[Scoring Overview] <br/></a>
+                <a style="text-align:center" href="late.html">[Late Submission Overview]  </a>
+                <a style="text-align:center" href="">[Discussion Length Overview] <br/></a>
+                <a style="text-align:center" href="">[Personel Data Analysis] </a>
+                <a style="text-align:center" href="../index.html">[Back to Initial Page] <br/></a>
             </nav>    
         </header>
         <header class = "second-header" id="svg_header">
@@ -52,10 +58,10 @@
             
         <aside id="perspective-nav">
         <nav class="main-nav">
-          <a href="../teacher/index.html" id="teacher-btn" class="main-nav-btn">
+          <a href="../teacher/index.html" id="teacher-btn" class="main-nav-btn active">
             <i class="fa fa-tasks" aria-hidden="true"></i> Teacher
           </a>
-          <a href="" id="student-btn" class="main-nav-btn  active">
+          <a href="" id="student-btn" class="main-nav-btn">
             <i i class="fa fa-graduation-cap" aria-hidden="true"></i> Student
           </a>
           <a href="#" id="about-btn" class="main-nav-btn">
@@ -66,18 +72,19 @@
     <section class = "main_section">
         <div class = "assignments_score" >
         <script src="//d3js.org/d3.v3.min.js"></script>
+        <script src='../main.js'>
         <script id = "assignment">
 
             // so we don't accidentally write things off of the canvas, give us a little breathing room
-            var margins = {top: 40, right: 20, bottom: 40, left: 20};
+            var margins = {top: 140, right: 20, bottom: 40, left: 20};
             // modifying these variables should neatly update everything else
-            var width = window.innerWidth;
-            var height = window.innerHeight;
+            var width = 3 * window.innerWidth;
+            var height = 5* window.innerHeight;
             var txtWidth = 200;
             var visWidth = width - txtWidth;
 
             // color for late hours
-            var colorCalibration = ['#a50026','#d73027','#f46d43','f46d43','#fdae61','#fee08b','#ffffbf','#d9ef8b','a6d96a','66bd63','#1a9850','#006837'];
+            var colorCalibration = ['#9e0142','#d53e4f','#f46d43','#fdae61','#fee08b','#ffffbf','#e6f598','#abdda4','#66c2a5','#3288bd','#5e4fa2'];
             var colorScale = d3.scale.linear().domain([1,7]).range(["orange","steelblue"]);
 
 
@@ -107,7 +114,7 @@
             //   use something like <https://www.npmjs.com/package/http-server> or 
             //   Python's HTTP Server: `python -m SimpleHTTPServer`.
             // anonymous function here is a call back function and will execute after the d3.json function excuted 
-            d3.json("../../SimpleData/20x10.json", function(error, data) {
+            d3.json(path, function(error, data) { //"../../RealisticData/100x15.json"
                 updateVis(data);
             });
             function updateVis(data) {
@@ -170,51 +177,85 @@
                         return posts(student.posts.length); 
                     })
                     .style('fill', function(student){
-                        //return colorScale(d.posts.length);
-                        return colorCalibration[student.posts.length];
+                        var postNo = student.posts.length;
+                        if (postNo > 11){
+                            postNo=11;
+                        }
+                        return colorCalibration[postNo-1];
                     })
                 
-               
-               
+                // sconsole.log(assignments); 
+                var students=[];
+                var ave;
+                var count;
                 // the score for each assignment; color red if the assignment was late
                 assignments.append('text')
                     .attr('x', x.rangeBand() / 2)
-                    .style('text-anchor', 'middle')
+                    .attr('transform','translate('+ -25+',0)')
+                    .style('text-anchor', 'start')
                     .style('fill', function(d) { 
-                        return d.late > 0 ? '#e41a1c' : 'white'; 
+                        return d.late > 0 ? '#e41a1c' : 'black'; 
                     })
                     .style('font-weight', function(d) {
-                        return d.late > 0 ? 'bold' : 'normal;'
+                        return d.late < 0 ? 'bold' : 'normal;'
                     })
                     .style('font-family', function(d) {
                         return d.late > 0 ? 'times' : 'sans-serif';
                     })
-
-                    .text(function(d) { return d.late > 0? d.score : d.score; })
+                    .text(function(assignment, i) { 
+                        //console.log(assignment);
+                        var j;
+                        ave = 0;
+                        count = 0;
+                        for(j=0; j<assignment.posts.length; j++) {
+                            count += assignment.posts[j].length;
+                        }
+                        ave = count/j;
+                        return assignment.posts.length == 0 ? 0 +'w/post': Math.floor(ave) + 'w/post';  }) // + "/ "assignments[i]._data_.posts.length
                     ;   //+ ' ' +  d.late + ' hr': d.score
+
+                var reD=new RegExp('Disc');
+                var reS=new RegExp('SeekFind');
+
 
                 svg.append("g")
                     .attr("class", "x_axis")
                     .attr('transform', 'translate(' + txtWidth+ ',-20)')
-                    .call(xAxis)
-                    .style('fill', function(d){
-                        return d.id > 0 ? 'whilte ': 'black';
+                    .style('fill','white')
+                    .call(xAxis);
+
+                svg.append("text")
+                    .attr('transform', 'translate(' +(width/2 + txtWidth)+ ',-100)')
+                    .attr('text-anchor', 'middle') 
+                    .attr('text-align', 'center')
+                    .style('font-size','30px')
+                    .style('fill','white')
+                    .text('Number of Postings and Average Post Length for Assignments');
+
+
+            var  body = d3.select('body');
+            for(var i = 0; i<10; i++) {
+                body.append('div').attr('style',function(d){
+                        return 'background-color: ' + colorCalibration[i];
                     })
-                    .text(function (d) {
-                        return data.assignments[d].id;
+                    .attr('class','ramp')
+                    .attr('transform', 'translate(' +(width/2 + txtWidth)+ ',-100)');
+                body.append('text')
+                    .attr('class', 'ramp')
+                    .attr('transform', 'translate(' +(width/2 + txtWidth)+ ',height)')
+                    .style('fill',colorCalibration[i])
+                    .text(function(){
+                        if(i+1>=10) {
+                            return 10+" and more"
+                        }
+                        return i+"post "
                     });
-                
+            }
 
             }
 
-            function renderColorForLate() {
-
-            }
-            function login() {
-
-            }
 
         </script>
     </div>
-      <script src="student.js"></script>
+      <script src="teacher.js"></script>
 </section>
