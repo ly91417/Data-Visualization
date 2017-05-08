@@ -18,10 +18,19 @@
         }
         #website_header{
            text-align: center;
+           float: left;
+           font: 10px sans-serif;
         }
         .assignments_score{
             margin: auto;
-            float:right;
+            float: left;
+            font: 10px sans-serif;
+        }
+        .ramp{
+            width:60px;
+            height: 60px;
+            float: left;
+            margin: 2px;
         }
         
     </style>
@@ -30,19 +39,18 @@
         <title > CS765 Design Challenge 3</title>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="teacher.css">
+        <link rel="stylesheet" href="main.css">
     </head>
     
     <body>
         <header class = "top-header" id="webiste_header">
-            <h1 style="text-align:center">Grading System--Teacher Perspective <br/> </h1>
-            <h3 style="text-align:center"> author: Ying Li  {li528@wisc.edu} </h3>
+            <h1 style='font-size:25px'>Design Challenge 3: CS765 Data Visualization<br/>  </h1>
             <nav style="text-align:center" class="top-nav">
-                <a style="text-align:center" href="">[Scoring Overview] <br/></a>
+                <a style="text-align:center" href="score.html">[Scoring Overview] <br/></a>
                 <a style="text-align:center" href="late.html">[Late Submission Overview]  </a>
-                <a style="text-align:center" href="">[Discussion Length Overview] <br/></a>
+                <a style="text-align:center" href="length.html">[Discussion Length Overview] <br/></a>
                 <a style="text-align:center" href="">[Personel Data Analysis] </a>
-                <a style="text-align:center" href="../index.html">[Back to Initial Page] <br/></a>
+                <a style="text-align:center" href="index.html">[Back to Initial Page] <br/></a>
             </nav>    
         </header>
         <header class = "second-header" id="svg_header">
@@ -51,34 +59,35 @@
         </header>
             
         <aside id="perspective-nav">
-        <nav class="main-nav">
-          <a href="../teacher/index.html" id="teacher-btn" class="main-nav-btn active">
-            <i class="fa fa-tasks" aria-hidden="true"></i> Teacher
-          </a>
-          <a href="" id="student-btn" class="main-nav-btn">
-            <i i class="fa fa-graduation-cap" aria-hidden="true"></i> Student
-          </a>
-          <a href="#" id="about-btn" class="main-nav-btn">
-            <i class="fa fa-eye" aria-hidden="true"> </i> About
-          </a>
-        </nav>
-      </aside>
+            <nav class="navbar navbar-inverse visible-xs">
+              <a href="teacher.html" id="teacher-btn" class="main-nav-btn">
+                <i class="fa fa-tasks" aria-hidden="true"></i> Teacher
+              </a>
+              <a href="student.html" id="student-btn" class="main-nav-btn">
+                <i i class="fa fa-graduation-cap" aria-hidden="true"></i> Student
+              </a>
+              <a href="about.html" id="about-btn" class="main-nav-btn">
+                <i class="fa fa-eye" aria-hidden="true"> </i> About
+              </a>
+            </nav>
+        </aside>
     <section class = "main_section">
         <div class = "assignments_score" >
         <script src="//d3js.org/d3.v3.min.js"></script>
+        <script src="main.js"></script>
         <script id = "assignment">
 
             // so we don't accidentally write things off of the canvas, give us a little breathing room
             var margins = {top: 140, right: 20, bottom: 40, left: 20};
             // modifying these variables should neatly update everything else
-            var width = 3 * window.innerWidth;
-            var height = 5* window.innerHeight;
+            var width = 1.5* window.innerWidth;
+            var height = 5 * window.innerHeight;
             var txtWidth = 200;
             var visWidth = width - txtWidth;
 
             // color for late hours
-            var colorCalibration = ['#a50026','#d73027','#f46d43','f46d43','#fdae61','#fee08b','#ffffbf','#d9ef8b','a6d96a','66bd63','#1a9850','#006837'];
-            var colorScale = d3.scale.linear().domain([1,7]).range(["orange","steelblue"]);
+            var colorCalibration = ['#7f3b08','#b35806','#e08214','#fdb863','#fee0b6','#f7f7f7','#d8daeb','#b2abd2','#8073ac','#542788','#2d004b'];
+            var colorScale = d3.scale.linear().domain([0,60]).range([d3.rgb("#fff7fb"),d3.rgb("#023858")]);
 
 
             var svg = d3.select('body').append('svg')
@@ -107,7 +116,7 @@
             //   use something like <https://www.npmjs.com/package/http-server> or 
             //   Python's HTTP Server: `python -m SimpleHTTPServer`.
             // anonymous function here is a call back function and will execute after the d3.json function excuted 
-            d3.json("../../RealisticData/765-old-anon.json", function(error, data) {
+            d3.json("" + path, function(error, data) {
                 updateVis(data);
             });
             function updateVis(data) {
@@ -165,73 +174,78 @@
 
                 assignments.append('rect')
                     .attr('y', -y.rangeBand() / 2 ) //arrange the position for the text
-                    .attr('height', y.rangeBand() / 1.5)
-                    .attr('width', function(student) { 
-                        return posts(student.posts.length); 
+                    .attr('height', y.rangeBand() / 1.1 )
+                    .attr('width', function(s) { 
+                        console.log(s);
+                        if(s.posts.length==0) {
+                            return posts(0);
+                        }else{
+                            return posts(11);//student.posts.length); 
+                        }          
                     })
                     .style('fill', function(student){
-                        //return colorScale(d.posts.length);
-                        return colorCalibration[student.posts.length];
-                    })
-                
-                // sconsole.log(assignments); 
-                var students=[];
-                var ave;
-                var count;
+                        //return colorScale(student.posts.length);
+                        return colorCalibration[ student.posts.length > 10? 10 : student.posts.length];
+                    });   
                 // the score for each assignment; color red if the assignment was late
                 assignments.append('text')
                     .attr('x', x.rangeBand() / 2)
-                    .attr('transform','translate('+ -25+',0)')
-                    .style('text-anchor', 'start')
+                    .style('text-anchor', 'middle')
                     .style('fill', function(d) { 
-                        return d.late > 0 ? '#e41a1c' : 'black'; 
+                        return d.late > 0 ? 'red' : 'black'; 
                     })
                     .style('font-weight', function(d) {
-                        return d.late < 0 ? 'bold' : 'normal;'
+                        return d.late > 0 ? 'bold' : 'normal;'
                     })
                     .style('font-family', function(d) {
                         return d.late > 0 ? 'times' : 'sans-serif';
                     })
-                    .text(function(assignment, i) { 
-                        console.log(assignment);
-                        var j;
-                        ave = 0;
-                        count = 0;
-                        for(j=0; j<assignment.posts.length; j++) {
-                            count += assignment.posts[j].length;
-                        }
-                        ave = count/j;
-                        return assignment.posts.length == 0 ? 0 +'w/post': Math.floor(ave) + 'w/post';  }) // + "/ "assignments[i]._data_.posts.length
+
+                    .text(function(d) { return d.late > 0? 'L' : ''; })
                     ;   //+ ' ' +  d.late + ' hr': d.score
 
-                var reD=new RegExp('Disc');
-                var reS=new RegExp('SeekFind');
-
-
-                svg.append("g")
+                svg.append('g')
                     .attr("class", "x_axis")
                     .attr('transform', 'translate(' + txtWidth+ ',-20)')
                     .style('fill','white')
                     .call(xAxis);
 
-                svg.append("text")
+                svg.append('text')
                     .attr('transform', 'translate(' +(width/2 + txtWidth)+ ',-100)')
                     .attr('text-anchor', 'middle') 
                     .attr('text-align', 'center')
                     .style('font-size','30px')
                     .style('fill','white')
-                    .text('Number of Postings and Average Post Length for Assignments');
+                    .text('Assignments Number of Postings HeatMap');
+                console.log(d3.select('body'));
 
+                
             }
 
-            function renderColorForLate() {
-
-            }
-            function login() {
-
+            var  body = d3.select('body');
+            for(var i = 0; i<10; i++) {
+                body.append('div').attr('style',function(d){
+                        return 'background-color: ' + colorCalibration[i];
+                    })
+                    .attr('class','ramp')
+                    .attr('transform', 'translate(' +(width/2 + txtWidth)+ ',-100)');
+                body.append('text')
+                    .attr('class', 'ramp')
+                    .attr('transform', 'translate(' +(width/2 + txtWidth)+ ',height)')
+                    .style('fill',colorCalibration[i])
+                    .text(function(d){
+                        var postNo = i+1;
+                        if( postNo >= 10 ){
+                            psotNo = 10;
+                            return "10 and more posts"
+                        }
+                        else{
+                            return i+1 +' post';
+                        }
+                    }
+                        );
             }
 
         </script>
     </div>
-      <script src="teacher.js"></script>
 </section>

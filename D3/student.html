@@ -18,19 +18,10 @@
         }
         #website_header{
            text-align: center;
-           float: left;
-           font: 10px sans-serif;
         }
         .assignments_score{
             margin: auto;
-            float: left;
-            font: 10px sans-serif;
-        }
-        .ramp{
-            width:60px;
-            height: 60px;
-            float: left;
-            margin: 2px;
+            float:right;
         }
         
     </style>
@@ -39,18 +30,18 @@
         <title > CS765 Design Challenge 3</title>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="../main.css">
+        <link rel="stylesheet" href="main.css">
     </head>
     
     <body>
         <header class = "top-header" id="webiste_header">
-            <h1 style='font-size:25px'>Design Challenge 3: CS765 Data Visualization<br/>  </h1>
+            <h1 style="text-align:center; font-size:25;">Grading System--Student Perspective <br/> </h1>
             <nav style="text-align:center" class="top-nav">
-                <a style="text-align:center" href="score.html">[Scoring Overview] <br/></a>
-                <a style="text-align:center" href="late.html">[Late Submission Overview]  </a>
-                <a style="text-align:center" href="length.html">[Discussion Length Overview] <br/></a>
-                <a style="text-align:center" href="">[Personel Data Analysis] </a>
-                <a style="text-align:center" href="../index.html">[Back to Initial Page] <br/></a>
+                <a style="text-align:center" href="">[Scoring Overview]</a>
+                <a style="text-align:center" href="late.html">[Late Submission Overview] </a>
+                <a style="text-align:center" href="">[Discussion Length Overview]</a>
+                <a style="text-align:center" href="">[Personel Data Analysis]</a>
+                <a style="text-align:center" href="index.html">[Back to Initial Page]</a>
             </nav>    
         </header>
         <header class = "second-header" id="svg_header">
@@ -60,13 +51,13 @@
             
         <aside id="perspective-nav">
         <nav class="main-nav">
-          <a href="../teacher/index.html" id="teacher-btn" class="main-nav-btn active">
+          <a href="teacher.html" id="teacher-btn" class="main-nav-btn">
             <i class="fa fa-tasks" aria-hidden="true"></i> Teacher
           </a>
-          <a href="" id="student-btn" class="main-nav-btn">
+          <a href="student.html" id="student-btn" class="main-nav-btn  active">
             <i i class="fa fa-graduation-cap" aria-hidden="true"></i> Student
           </a>
-          <a href="#" id="about-btn" class="main-nav-btn">
+          <a href="aboyt.html" id="about-btn" class="main-nav-btn">
             <i class="fa fa-eye" aria-hidden="true"> </i> About
           </a>
         </nav>
@@ -74,19 +65,20 @@
     <section class = "main_section">
         <div class = "assignments_score" >
         <script src="//d3js.org/d3.v3.min.js"></script>
+        <script src='main.js'></script>
         <script id = "assignment">
 
             // so we don't accidentally write things off of the canvas, give us a little breathing room
-            var margins = {top: 140, right: 20, bottom: 40, left: 20};
+            var margins = {top: 40, right: 20, bottom: 40, left: 20};
             // modifying these variables should neatly update everything else
-            var width = 1.5* window.innerWidth;
+            var width = 2 * window.innerWidth;
             var height = 5 * window.innerHeight;
             var txtWidth = 200;
             var visWidth = width - txtWidth;
 
             // color for late hours
-            var colorCalibration = ['#67001f','#b2182b','#d6604d','#f4a582','#fddbc7','#f7f7f7','#d1e5f0','#92c5de','#4393c3','#2166ac','#053061'];
-            var colorScale = d3.scale.linear().domain([0,60]).range([d3.rgb("#fff7fb"),d3.rgb("#023858")]);
+            var colorCalibration = ['#a50026','#d73027','#f46d43','f46d43','#fdae61','#fee08b','#ffffbf','#d9ef8b','a6d96a','66bd63','#1a9850','#006837'];
+            var colorScale = d3.scale.linear().domain([1,7]).range(["orange","steelblue"]);
 
 
             var svg = d3.select('body').append('svg')
@@ -115,7 +107,7 @@
             //   use something like <https://www.npmjs.com/package/http-server> or 
             //   Python's HTTP Server: `python -m SimpleHTTPServer`.
             // anonymous function here is a call back function and will execute after the d3.json function excuted 
-            d3.json('../../RealisticData/765-old-anon.json', function(error, data) {
+            d3.json("" + path, function(error, data) {
                 updateVis(data);
             });
             function updateVis(data) {
@@ -165,7 +157,7 @@
                 var posts = d3.scale.linear()
                     .domain([0, 11])
                     .range([0, x.rangeBand()])
-                    .clamp(true);
+                    .clamp(false);
                 // draw the box that communicates the number of posts;
                 // draw this first so we can put text on top
                 var assignment = assignments.append('g')
@@ -178,15 +170,18 @@
                         return posts(student.posts.length); 
                     })
                     .style('fill', function(student){
-                        //return colorScale(student.posts.length);
-                        return colorCalibration[student.posts.length > 10? 10 : student.posts.length];
-                    });   
+                        //return colorScale(d.posts.length);
+                        return colorCalibration[student.posts.length];
+                    })
+                
+               
+               
                 // the score for each assignment; color red if the assignment was late
                 assignments.append('text')
                     .attr('x', x.rangeBand() / 2)
                     .style('text-anchor', 'middle')
                     .style('fill', function(d) { 
-                        return d.late > 0 ? 'orange' : 'black'; 
+                        return d.late > 0 ? '#e41a1c' : 'white'; 
                     })
                     .style('font-weight', function(d) {
                         return d.late > 0 ? 'bold' : 'normal;'
@@ -195,53 +190,29 @@
                         return d.late > 0 ? 'times' : 'sans-serif';
                     })
 
-                    .text(function(d) { return d.late > 0? 'L' : ''; })
+                    .text(function(d) { return d3.format(".2n")(d.score); })
                     ;   //+ ' ' +  d.late + ' hr': d.score
 
-                svg.append('g')
+                svg.append("g")
                     .attr("class", "x_axis")
                     .attr('transform', 'translate(' + txtWidth+ ',-20)')
-                    .style('fill','white')
-                    .call(xAxis);
-
-                svg.append('text')
-                    .attr('transform', 'translate(' +(width/2 + txtWidth)+ ',-100)')
-                    .attr('text-anchor', 'middle') 
-                    .attr('text-align', 'center')
-                    .style('font-size','30px')
-                    .style('fill','white')
-                    .text('Assignments Number of Postings HeatMap');
-                console.log(d3.select('body'));
-
+                    .call(xAxis)
+                    .style('fill', 'whilte')
+                    .text(function (d) {
+                        return data.assignments[d].id;
+                    });
                 
+
             }
 
-            var  body = d3.select('body');
-            for(var i = 0; i<10; i++) {
-                body.append('div').attr('style',function(d){
-                        return 'background-color: ' + colorCalibration[i];
-                    })
-                    .attr('class','ramp')
-                    .attr('transform', 'translate(' +(width/2 + txtWidth)+ ',-100)');
-                body.append('text')
-                    .attr('class', 'ramp')
-                    .attr('transform', 'translate(' +(width/2 + txtWidth)+ ',height)')
-                    .style('fill',colorCalibration[i])
-                    .text(i+1+"post, ");
+            function renderColorForLate() {
+
             }
-                    // .data(colorCalibration).enter()
-                    // .append('rect')
-                    // 
-                    // .attr('x',txtWidth)
-                    // .attr('y',height+120)
-                    // .attr('height',120)
-                    // .attr('width',120)
-                    // .style('fill',function(d) {
-                    //     return d;
-                    // });
-            
+            function login() {
+
+            }
 
         </script>
     </div>
-      <script src="teacher.js"></script>
+      <script src="student.js"></script>
 </section>
