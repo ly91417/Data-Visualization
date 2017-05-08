@@ -36,34 +36,29 @@
         <title > CS765 Design Challenge 3</title>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="teacher.css">
+        <link rel="stylesheet" href="main.css">
     </head>
     
     <body>
-        <header class = "top-header" id="webiste_header">
+         <header class = "top-header" id="webiste_header">
             <h1 style='font-size:25px'>Design Challenge 3: CS765 Data Visualization<br/>  </h1>
             <nav style="text-align:center" class="top-nav">
-                <a style="text-align:center" href="">[Scoring Overview] <br/></a>
+                <a style="text-align:center" href="score.html">[Scoring Overview] <br/></a>
                 <a style="text-align:center" href="late.html">[Late Submission Overview]  </a>
-                <a style="text-align:center" href="">[Discussion Length Overview] <br/></a>
-                <a style="text-align:center" href="">[Personel Data Analysis] </a>
-                <a style="text-align:center" href="../index.html">[Back to Initial Page] <br/></a>
+                <a style="text-align:center" href="length.html">[Discussion Length Overview] <br/></a>
+                <a style="text-align:center" href="index.html">[Back to Initial Page] <br/></a>
             </nav>    
-        </header>
-        <header class = "second-header" id="svg_header">
-            <h1 style="text-align:left">Person Name : </h1>
-            <h3 style="text-align:center"> Grade of Submissions </h3>
         </header>
             
         <aside id="perspective-nav">
         <nav class="main-nav">
-          <a href="../teacher/index.html" id="teacher-btn" class="main-nav-btn active">
+          <a href="teacher.html" id="teacher-btn" class="main-nav-btn active">
             <i class="fa fa-tasks" aria-hidden="true"></i> Teacher
           </a>
-          <a href="" id="student-btn" class="main-nav-btn">
+          <a href="student.html" id="student-btn" class="main-nav-btn">
             <i i class="fa fa-graduation-cap" aria-hidden="true"></i> Student
           </a>
-          <a href="#" id="about-btn" class="main-nav-btn">
+          <a href="about.html" id="about-btn" class="main-nav-btn">
             <i class="fa fa-eye" aria-hidden="true"> </i> About
           </a>
         </nav>
@@ -83,7 +78,7 @@
             var visWidth = width - txtWidth;
 
             // color for late hours
-            var colorCalibration = ['#a50026','#d73027','#f46d43','#fdae61','#fee08b','#d9ef8b','#a6d96a','#66bd63','#1a9850','#006837'];
+            var colorCalibration = ['#a50026','#930c28','#f46d43','#fdae61','#fee08b','#d9ef8b','#a6d96a','#66bd63','#1a9850','#006837'];
             var colorScale = d3.scale.linear().domain([0,48]).range([d3.rgb("#d9ef8b"),d3.rgb("#006837")]);
             var lateclolorScale = d3.scale.linear().domain([0,48]).range([d3.rgb("#fee08b"),d3.rgb("#a50026")]);
 
@@ -245,10 +240,10 @@
                             }
                             else{
                                 if(late4Hour >= 6 ) {
-                                    return "Late >" + d3.format(".1f")((i+1)*4.8) +' hr';
+                                    return "Late > " + d3.format(".1f")((i-1)*4.8) +'hr';
                                 }
                                 else{
-                                    return "Earlier >" + d3.format(".1f")((i+1)*4.8) +' hr';
+                                    return "Earlier < " + d3.format(".1f")((7-i)*4.8) +'hr';
                                 }
                                 
                             }
@@ -258,6 +253,56 @@
             }
 
         </script>
+         <table class="table-responsive">
+            <thead class='description' style="color:yellow; text-align: center; font-weight: bold">
+                <td>Task</td>
+                <td>Encodings</td>
+                <td>Defects</td>
+            </thead>
+            <tbody style="color:white; text-align: left; font-weight: bold">
+                <tr>
+                    <td style=" text-align: left; valign: top; whitespace: nowrap;">
+                    <ul>
+                        <li>For this visualization, the task is to show late submissions of each student and explore the pattern of submission for each students. Also, to explore the relation between score and lateness of submissions.
+                        </li>
+                    </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>
+                            The x axis is the assignments throught the semester which could be encoding time or sequence of assignments
+                            </li>
+                            <li>
+                            The y axis is the alphabetical ordered students
+                            </li>
+                            <li>
+                            The color of the circle is used to encode the lateness of submission or the early submission. This information could be utilized to explore the submission pattern of some specific student<span style="color: green"><em> (ex. always late or never start early)</em></span>, to explore the submission pattern for group of student through semester<span style="color: green"> <em> (ex. some students from same group tend to start earlier than other group, for initial submissions there exsit lot of lateness)</em></span>
+                            </li>
+                            <li>
+                            The score are provided with each circle as the assignment score encoded in the text. Along with the lateness encoded in color discussed before, this score can be utilized to explore the influence of lateness in scoring when compared to peers<span style="color: green"><em>(ex. some students have lateness still got high score which is not commen to see )</em></span>
+                            </li>
+                            <li>
+                            The color of the score is encoded for late submission information in which red is late submissions and yellow ones are regular submissions. This information could be used to explore teh pattern of lateness and the high contrast of color in red and black could be more easier to conclude how much portion of submissions a student have made.
+                            </li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>
+                            The system does not have a backend server and it is hard to perform complicated aggregation manipulation without precomputing and storage in database. 
+                            </li>
+                            <li>
+                            If time permits, the interaction could be involved in to further analysis for individual data rather than only overview
+                            </li>
+                            <li>
+                            If time permits, more aggregated data should be calculated
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
-      <script src="teacher.js"></script>
+
+
 </section>

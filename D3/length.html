@@ -29,6 +29,10 @@
             float: left;
             margin: 2px;
         }
+        .discription{
+            height:100px;
+            width: 100%;
+        }
         
     </style>
 
@@ -36,226 +40,294 @@
         <title > CS765 Design Challenge 3</title>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="teacher.css">
+        <link rel="stylesheet" href="main.css">
     </head>
     
     <body>
         <header class = "top-header" id="webiste_header">
-            <h1 style="text-align:center">Grading System--Teacher Perspective <br/> </h1>
-            <h3 style="text-align:center"> author: Ying Li  {li528@wisc.edu} </h3>
+            <h1 style='font-size:25px'>Design Challenge 3: CS765 Data Visualization<br/>  </h1>
             <nav style="text-align:center" class="top-nav">
-                <a style="text-align:center" href="">[Scoring Overview] <br/></a>
+                <a style="text-align:center" href="score.html">[Scoring Overview] <br/></a>
                 <a style="text-align:center" href="late.html">[Late Submission Overview]  </a>
-                <a style="text-align:center" href="">[Discussion Length Overview] <br/></a>
-                <a style="text-align:center" href="">[Personel Data Analysis] </a>
-                <a style="text-align:center" href="../index.html">[Back to Initial Page] <br/></a>
+                <a style="text-align:center" href="length.html">[Discussion Length Overview] <br/></a>
+                <a style="text-align:center" href="index.html">[Back to Initial Page] <br/></a>
             </nav>    
-        </header>
-        <header class = "second-header" id="svg_header">
-            <h1 style="text-align:left">Person Name : </h1>
-            <h3 style="text-align:center"> Grade of Submissions </h3>
         </header>
             
         <aside id="perspective-nav">
-        <nav class="main-nav">
-          <a href="../teacher/index.html" id="teacher-btn" class="main-nav-btn active">
-            <i class="fa fa-tasks" aria-hidden="true"></i> Teacher
-          </a>
-          <a href="" id="student-btn" class="main-nav-btn">
-            <i i class="fa fa-graduation-cap" aria-hidden="true"></i> Student
-          </a>
-          <a href="#" id="about-btn" class="main-nav-btn">
-            <i class="fa fa-eye" aria-hidden="true"> </i> About
-          </a>
-        </nav>
-      </aside>
-    <section class = "main_section">
-        <div class = "assignments_score" >
-        <script src="//d3js.org/d3.v3.min.js"></script>
-        <script src='../main.js'>
-        <script id = "assignment">
+            <nav class="main-nav">
+              <a href="teacher.html" id="teacher-btn" class="main-nav-btn active">
+                <i class="fa fa-tasks" aria-hidden="true"></i> Teacher
+              </a>
+              <a href="student.html" id="student-btn" class="main-nav-btn">
+                <i i class="fa fa-graduation-cap" aria-hidden="true"></i> Student
+              </a>
+              <a href="about.html" id="about-btn" class="main-nav-btn">
+                <i class="fa fa-eye" aria-hidden="true"> </i> About
+              </a>
+            </nav>
+        </aside>
+        <section class = "main_section">
+            <div class = "assignments_score" >
+                <script src="//d3js.org/d3.v3.min.js"></script>
+                <script src="main.js"> </script>
+                <script id = "assignment">
 
-            // so we don't accidentally write things off of the canvas, give us a little breathing room
-            var margins = {top: 140, right: 20, bottom: 40, left: 20};
-            // modifying these variables should neatly update everything else
-            var width = 3 * window.innerWidth;
-            var height = 5* window.innerHeight;
-            var txtWidth = 200;
-            var visWidth = width - txtWidth;
+                    // so we don't accidentally write things off of the canvas, give us a little breathing room
+                    var margins = {top: 140, right: 20, bottom: 40, left: 20};
+                    // modifying these variables should neatly update everything else
+                    var width = 3 * window.innerWidth;
+                    var height = 5* window.innerHeight;
+                    var txtWidth = 200;
+                    var visWidth = width - txtWidth;
 
-            // color for late hours
-            var colorCalibration = ['#9e0142','#d53e4f','#f46d43','#fdae61','#fee08b','#ffffbf','#e6f598','#abdda4','#66c2a5','#3288bd','#5e4fa2'];
-            var colorScale = d3.scale.linear().domain([1,7]).range(["orange","steelblue"]);
-
-
-            var svg = d3.select('body').append('svg')
-                .attr('width', width + margins.left + margins.right)
-                .attr('height', height + margins.top + margins.bottom)
-                .style('display','')
-                .append('g')
-                    .attr('transform', 'translate(' + margins.left + ',' + margins.top + ')');
-            // step out the box positions per assignment
-            // see <https://github.com/d3/d3-3.x-api-reference/blob/master/Ordinal-Scales.md#ordinal>
-            //rangeRoundBands will load interval and the second parameter is the outer padding in percentage
-            var x = d3.scale.ordinal()
-                .rangeRoundBands([0, visWidth], 0.3);
+                    // color for late hours
+                    var colorCalibration = ['#9e0142','#d53e4f','#f46d43','#fdae61','#fee08b','#ffffbf','#e6f598','#abdda4','#66c2a5','#3288bd','#5e4fa2'];
+                    var colorScale = d3.scale.linear().domain([1,7]).range(["#ffeda0","#f03b20"]);
 
 
-            var xAxis = d3.svg.axis().scale(x).orient("top");
+                    var svg = d3.select('body').append('svg')
+                        .attr('width', width + margins.left + margins.right)
+                        .attr('height', height + margins.top + margins.bottom)
+                        .style('display','')
+                        .append('g')
+                            .attr('transform', 'translate(' + margins.left + ',' + margins.top + ')');
+                    // step out the box positions per assignment
+                    // see <https://github.com/d3/d3-3.x-api-reference/blob/master/Ordinal-Scales.md#ordinal>
+                    //rangeRoundBands will load interval and the second parameter is the outer padding in percentage
+                    var x = d3.scale.ordinal()
+                        .rangeRoundBands([0, visWidth], 0.3);
+
+
+                    var xAxis = d3.svg.axis().scale(x).orient("top");
 
 
 
-            // scale for determining name positions
-            var y = d3.scale.ordinal()
-                .rangeRoundBands([0, height], 0.1);
-            // get the data via an asynchronous call, then call our updateVis function
-            // see <https://github.com/d3/d3-3.x-api-reference/blob/master/Requests.md#d3_json>
-            // NOTE: you must run this page from within a webserver to get this to work (security concerns)
-            //   use something like <https://www.npmjs.com/package/http-server> or 
-            //   Python's HTTP Server: `python -m SimpleHTTPServer`.
-            // anonymous function here is a call back function and will execute after the d3.json function excuted 
-            d3.json(path, function(error, data) { //"../../RealisticData/100x15.json"
-                updateVis(data);
-            });
-            function updateVis(data) {
-                // update the scales now that we know domain variables
-                x.domain(d3.range(0, data.assignments.length));
-                //the map() method creates a new array with the results of calling a provided function on every element in this array.
-                //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map?v=example
-                //this will simply generate a new array based on the old array assign sortable_name for each student to y axis
-                y.domain(
-                    data.students.map(
-                        function(d) {
-                         return d.sortable_name; 
+                    // scale for determining name positions
+                    var y = d3.scale.ordinal()
+                        .rangeRoundBands([0, height], 0.1);
+                    // get the data via an asynchronous call, then call our updateVis function
+                    // see <https://github.com/d3/d3-3.x-api-reference/blob/master/Requests.md#d3_json>
+                    // NOTE: you must run this page from within a webserver to get this to work (security concerns)
+                    //   use something like <https://www.npmjs.com/package/http-server> or 
+                    //   Python's HTTP Server: `python -m SimpleHTTPServer`.
+                    // anonymous function here is a call back function and will execute after the d3.json function excuted 
+                    d3.json(""+ path, function(error, data) { //"../../RealisticData/100x15.json"
+                        if(error){
+                            console.log(error);
                         }
-                    )
-                );
-                // now, create a group for each student
-                // see <https://bost.ocks.org/mike/selection/> and <https://bost.ocks.org/mike/join/>
-                //   for information on how data joins work -- since we're only adding data, we jump straight to data().enter(); we don't care about updating existing data or removing old data.  
-                // We have to have a general .selectAll() before calling data, regardless.
-                var newStudents = svg.selectAll('g.student')
-                    //this data() function is really http://alignedleft.com/tutorials/d3/using-your-data
-                    .data(data.students).enter()
-                    .append('g')
-                        .attr('class', 'student')
-                        .attr('transform', function(student) { 
-                            return 'translate(0,' + y(student.sortable_name) + ')' //here the sortable_name is associated with the sortable_name stored in the memory
-                        });
-                // add a node to display the student's name
-                newStudents.append('text')
-                        .text(function(student) { return student.sortable_name + ' ' + student.id; })
-                        .style('fill','white');
-                // group the assignment vis together make a container to hold all the assignments for some student
-                var assignmentGrps = newStudents.append('g')
-                    .attr('class', 'assignments')
-                    .attr('transform', 'translate(' + txtWidth+ ',0)');
-                // now, assign a group for every assignment (for every student, so this makes a 2D selection)
-                var assignments = assignmentGrps.selectAll('g.assignment')
-                    .data(function(student) { return student.grades; }).enter() // student is every element in students array
-                    //group all the assignments for each student in one group
-                    .append('g')
-                        .attr('class', 'assignment')//name it assignment
-                        .attr('transform', function(grade, i) {
-                            return 'translate(' + x(i) + ',0)';
-                });
-                // create a scale to manage the width of the rectangle, 
-                // which communicates the # of posts made for an assignment
-                var posts = d3.scale.linear()
-                    .domain([0, 11])
-                    .range([0, x.rangeBand()])
-                    .clamp(false);
-                // draw the box that communicates the number of posts;
-                // draw this first so we can put text on top
-                var assignment = assignments.append('g')
-                    .attr('class', 'score')
-
-                assignments.append('rect')
-                    .attr('y', -y.rangeBand() / 2 ) //arrange the position for the text
-                    .attr('height', y.rangeBand() / 1.5)
-                    .attr('width', function(student) { 
-                        return posts(student.posts.length); 
-                    })
-                    .style('fill', function(student){
-                        var postNo = student.posts.length;
-                        if (postNo > 11){
-                            postNo=11;
-                        }
-                        return colorCalibration[postNo-1];
-                    })
-                
-                // sconsole.log(assignments); 
-                var students=[];
-                var ave;
-                var count;
-                // the score for each assignment; color red if the assignment was late
-                assignments.append('text')
-                    .attr('x', x.rangeBand() / 2)
-                    .attr('transform','translate('+ -25+',0)')
-                    .style('text-anchor', 'start')
-                    .style('fill', function(d) { 
-                        return d.late > 0 ? '#e41a1c' : 'black'; 
-                    })
-                    .style('font-weight', function(d) {
-                        return d.late < 0 ? 'bold' : 'normal;'
-                    })
-                    .style('font-family', function(d) {
-                        return d.late > 0 ? 'times' : 'sans-serif';
-                    })
-                    .text(function(assignment, i) { 
-                        //console.log(assignment);
-                        var j;
-                        ave = 0;
-                        count = 0;
-                        for(j=0; j<assignment.posts.length; j++) {
-                            count += assignment.posts[j].length;
-                        }
-                        ave = count/j;
-                        return assignment.posts.length == 0 ? 0 +'w/post': Math.floor(ave) + 'w/post';  }) // + "/ "assignments[i]._data_.posts.length
-                    ;   //+ ' ' +  d.late + ' hr': d.score
-
-                var reD=new RegExp('Disc');
-                var reS=new RegExp('SeekFind');
-
-
-                svg.append("g")
-                    .attr("class", "x_axis")
-                    .attr('transform', 'translate(' + txtWidth+ ',-20)')
-                    .style('fill','white')
-                    .call(xAxis);
-
-                svg.append("text")
-                    .attr('transform', 'translate(' +(width/2 + txtWidth)+ ',-100)')
-                    .attr('text-anchor', 'middle') 
-                    .attr('text-align', 'center')
-                    .style('font-size','30px')
-                    .style('fill','white')
-                    .text('Number of Postings and Average Post Length for Assignments');
-
-
-            var  body = d3.select('body');
-            for(var i = 0; i<10; i++) {
-                body.append('div').attr('style',function(d){
-                        return 'background-color: ' + colorCalibration[i];
-                    })
-                    .attr('class','ramp')
-                    .attr('transform', 'translate(' +(width/2 + txtWidth)+ ',-100)');
-                body.append('text')
-                    .attr('class', 'ramp')
-                    .attr('transform', 'translate(' +(width/2 + txtWidth)+ ',height)')
-                    .style('fill',colorCalibration[i])
-                    .text(function(){
-                        if(i+1>=10) {
-                            return 10+" and more"
-                        }
-                        return i+"post "
+                        updateVis(data);
                     });
-            }
+                    function updateVis(data) {
+                        // update the scales now that we know domain variables
+                        x.domain(d3.range(0, data.assignments.length));
+                        //the map() method creates a new array with the results of calling a provided function on every element in this array.
+                        //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map?v=example
+                        //this will simply generate a new array based on the old array assign sortable_name for each student to y axis
+                        y.domain(
+                            data.students.map(
+                                function(d) {
+                                 return d.sortable_name; 
+                                }
+                            )
+                        );
+                        // now, create a group for each student
+                        // see <https://bost.ocks.org/mike/selection/> and <https://bost.ocks.org/mike/join/>
+                        //   for information on how data joins work -- since we're only adding data, we jump straight to data().enter(); we don't care about updating existing data or removing old data.  
+                        // We have to have a general .selectAll() before calling data, regardless.
+                        var newStudents = svg.selectAll('g.student')
+                            //this data() function is really http://alignedleft.com/tutorials/d3/using-your-data
+                            .data(data.students).enter()
+                            .append('g')
+                                .attr('class', 'student')
+                                .attr('transform', function(student) { 
+                                    return 'translate(0,' + y(student.sortable_name) + ')' //here the sortable_name is associated with the sortable_name stored in the memory
+                                });
+                        // add a node to display the student's name
+                        newStudents.append('text')
+                                .text(function(student) { return student.sortable_name + ' ' + student.id; })
+                                .style('fill','white');
+                        // group the assignment vis together make a container to hold all the assignments for some student
+                        var assignmentGrps = newStudents.append('g')
+                            .attr('class', 'assignments')
+                            .attr('transform', 'translate(' + txtWidth+ ',0)');
+                        // now, assign a group for every assignment (for every student, so this makes a 2D selection)
+                        var assignments = assignmentGrps.selectAll('g.assignment')
+                            .data(function(student) { return student.grades; }).enter() // student is every element in students array
+                            //group all the assignments for each student in one group
+                            .append('g')
+                                .attr('class', 'assignment')//name it assignment
+                                .attr('transform', function(grade, i) {
+                                    return 'translate(' + x(i) + ',0)';
+                        });
+                        // create a scale to manage the width of the rectangle, 
+                        // which communicates the # of posts made for an assignment
+                        var posts = d3.scale.linear()
+                            .domain([0, 11])
+                            .range([0, x.rangeBand()])
+                            .clamp(false);
+                        // draw the box that communicates the number of posts;
+                        // draw this first so we can put text on top
+                        var assignment = assignments.append('g')
+                            .attr('class', 'score')
 
-            }
+                        assignments.append('rect')
+                            .attr('y', -y.rangeBand() / 2 ) //arrange the position for the text
+                            .attr('height', y.rangeBand() / 1.5)
+                            .attr('width', function(student) { 
+                                return posts(student.posts.length); //posts(13);
+                            })
+                            .style('fill', function(student){
+                                var postNo = student.posts.length;
+                                if (postNo > 10){
+                                    postNo=10;
+                                }
+                                if(postNo==0){
+                                    return '#434343';
+                                }
+                                return colorCalibration[postNo-1];
+                            })
+                        
+                        // sconsole.log(assignments); 
+                        var students=[];
+                        var ave;
+                        var count;
+                        // the score for each assignment; color red if the assignment was late
+                        assignments.append('text')
+                            .attr('x', x.rangeBand() / 2)
+                            .attr('transform','translate('+ -25+',0)')
+                            .style('text-anchor', 'start')
+                            .style('fill', function(d) { 
+                                var j;
+                                ave = 0;
+                                count = 0;
+                                for(j=0; j<d.posts.length; j++) {
+                                    count += d.posts[j].length;
+                                }
+                                ave = count/j;
+                                console.log(d3.mean(findmean(data)));
+                                return ave > d3.mean(findmean(data))? 'yellow' : 'black'; 
+                            })
+                            .style('font-weight', function(d) {
+                                return d.late < 0 ? 'bold' : 'normal;'
+                            })
+                            .style('font-family', function(d) {
+                                return d.late > 0 ? 'times' : 'sans-serif';
+                            })
+                            .text(function(assignment, i) { 
+                                //console.log(assignment);
+                                var j;
+                                ave = 0;
+                                count = 0;
+                                for(j=0; j<assignment.posts.length; j++) {
+                                    count += assignment.posts[j].length;
+                                }
+                                ave = count/j;
+                                return assignment.posts.length == 0 ? 0 +'post': Math.floor(ave) + 'w/post';  }) // + "/ "assignments[i]._data_.posts.length
+                            ;   //+ ' ' +  d.late + ' hr': d.score
+
+                        var reD=new RegExp('Disc');
+                        var reS=new RegExp('SeekFind');
 
 
-        </script>
-    </div>
-      <script src="teacher.js"></script>
-</section>
+                        svg.append("g")
+                            .attr("class", "x_axis")
+                            .attr('transform', 'translate(' + txtWidth+ ',-20)')
+                            .style('fill','white')
+                            .call(xAxis);
+
+                        svg.append("text")
+                            .attr('transform', 'translate(' +(width/2 + txtWidth)+ ',-100)')
+                            .attr('text-anchor', 'middle') 
+                            .attr('text-align', 'center')
+                            .style('font-size','30px')
+                            .style('fill','white')
+                            .text('Number of Postings and Average Post Length for Assignments');
+
+
+                        var  body = d3.select('body');
+                        for(var i = 0; i<10; i++) {
+                            body.append('div').attr('style',function(d){
+                                    return 'background-color: ' + colorCalibration[i];
+                                })
+                                .attr('class','ramp')
+                                .attr('transform', 'translate(' +(width/2 + txtWidth)+ ',-100)');
+                            body.append('text')
+                                .attr('class', 'ramp')
+                                .attr('transform', 'translate(' +(width/2 + txtWidth)+ ',height)')
+                                .style('fill',colorCalibration[i])
+                                .text(function(){
+                                    if(i+1>=10) {
+                                        return 10+" and more"
+                                    }
+                                    return i+"post "
+                                });
+                        }
+
+                    }
+                    function findmean(data) {
+                        var averageOfPerson = [];
+                        for(var i = 0; i < data.students.length; i++) {
+                            var averageOfAssignments = 0;
+                            for(var j = 0; j < data.students[i].grades.length; j++) {
+                                var wordCount=0;
+                                for(var k = 0; k < data.students[i].grades[j].posts.length; k++) {
+                                    wordCount +=data.students[i].grades[j].posts[k].length;
+                                }
+                                averageOfAssignments += wordCount/data.students[i].grades[j].posts.length;
+                            }
+
+                            averageOfPerson.push(averageOfAssignments/data.students[i].grades.length);
+                        }
+                        return averageOfPerson;
+                    }
+                </script>
+                <table class="table-responsive">
+            <thead class='description' style="color:yellow; text-align: center; font-weight: bold">
+                <td>Task</td>
+                <td>Encodings</td>
+                <td>Defects</td>
+            </thead>
+            <tbody style="color:white; text-align: left; font-weight: bold">
+                <tr>
+                    <td style=" text-align: left; valign: top; whitespace: nowrap;">
+                    <ul>
+                        <li>or this visualization, the task is to explore the average posting length for each student in teacher's perspective and comparing with peer students' records.
+                        </li>
+                    </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>
+                            The width of rectagular and the colors were redandant encoded for the number of posts the student made for sepcific assignment.
+                            </li>
+                            <li>
+                            The color and width of the rectagular encode for the number of posts the students made for the assignment.<span style="color: green"><em>  (ex: The color ramp is shown in the bottom)</em> </span> 
+                            </li>
+                            <li>
+                            The text was encoded for the information of average length of postings for each student. This information could be used as a metric to show the posting quality <span style="color: green"><em>  (ex: it is cery clear to see the number of word for each post and easier to compare with different people)</em> </span> 
+                            </li>
+                            <li>
+                            The color of text was encoded for information that weather this assignment of specific student has larger average posting length than the median value. The median value of posting for each assignment was calculated through script and each average length of posting was compared to that. Yellow color encode for the information that this average number is larger than median value while black one is on the countrary. <span style="color: green"><em>  (ex: it is very clear to explore if some student have more posting which average length is larger than median or less than median)</em> </span> 
+                            </li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>
+                            The system does not have a backend server and it is hard to perform complicated aggregation manipulation without precomputing and storage in database. 
+                            </li>
+                            <li>
+                            If time permits, the interaction could be involved in to further analysis for individual data rather than only overview
+                            </li>
+                            <li>
+                            If time permits, more aggregated data should be calculated
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+            </div>
+        </section>
+    </body>
