@@ -32,6 +32,10 @@
             float: left;
             margin: 2px;
         }
+        .discription{
+            height:100px;
+            width: 100%;
+        }
         
     </style>
 
@@ -44,17 +48,13 @@
     
     <body>
         <header class = "top-header" id="webiste_header">
-            <h1 style='font-size:25px'>Design Challenge 3: CS765 Data Visualization<br/>  </h1>
+            <h1 style="text-align:center; font-size:25">Grading System--Teacher Perspective <br/> </h1>
             <nav style="text-align:center" class="top-nav">
                 <a style="text-align:center" href="score.html">[Scoring Overview] <br/></a>
                 <a style="text-align:center" href="late.html">[Late Submission Overview]  </a>
-                <a style="text-align:center" href="length.html">[Discussion Length Overview] <br/></a>
+                <a style="text-align:center" href="">[Discussion Length Overview] <br/></a>
                 <a style="text-align:center" href="index.html">[Back to Initial Page] <br/></a>
-            </nav>    
-        </header>
-        <header class = "second-header" id="svg_header">
-            <h1 style="text-align:left">Person Name : </h1>
-            <h3 style="text-align:center"> Grade of Submissions </h3>
+            </nav>       
         </header>
             
         <aside id="perspective-nav">
@@ -79,7 +79,7 @@
             // so we don't accidentally write things off of the canvas, give us a little breathing room
             var margins = {top: 140, right: 20, bottom: 40, left: 20};
             // modifying these variables should neatly update everything else
-            var width = 1.5* window.innerWidth;
+            var width =  window.innerWidth;
             var height = 5 * window.innerHeight;
             var txtWidth = 200;
             var visWidth = width - txtWidth;
@@ -99,7 +99,7 @@
             // see <https://github.com/d3/d3-3.x-api-reference/blob/master/Ordinal-Scales.md#ordinal>
             //rangeRoundBands will load interval and the second parameter is the outer padding in percentage
             var x = d3.scale.ordinal()
-                .rangeRoundBands([0, visWidth], 0.3);
+                .rangeRoundBands([0, visWidth], 0.1);
 
 
             var xAxis = d3.svg.axis().scale(x).orient("top");
@@ -175,7 +175,7 @@
                     .attr('y', -y.rangeBand() / 2 ) //arrange the position for the text
                     .attr('height', y.rangeBand() / 1.1 )
                     .attr('width', function(s) { 
-                        console.log(s);
+                        //console.log(s);
                         if(s.posts.length==0) {
                             return posts(0);
                         }else{
@@ -247,5 +247,45 @@
             }
 
         </script>
+         <table class="table-responsive">
+            <thead class='description' style="color:yellow; text-align: center; font-weight: bold; font-size: 2em;" >
+                <td>Task</td>
+                <td>Encodings</td>
+                <td>Defects</td>
+            </thead>
+            <tbody style="color:white; text-align: left; font-weight; font-size:2em;">
+                <tr>
+                    <td style=" text-align: left; valign: top; whitespace: nowrap;">
+                    <ul>
+                        <li>For this visualization, the task is to show number of postings for each assignment for each student and compare the number of post with peer's situation.
+                        </li>
+                    </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>
+                            The color of the rectagular is used to encode the number of posting for assignment. The detail is in the color ramp in the bottom. The color selection is utilized a divergin set for great comparision purpose.
+                            </li>
+                            <li>
+                            A red 'L' sign is selected as encoding of late submission information.
+                            </li>
+                            <li>
+                            If the rectangular is not existing, this is purposely designed to indicate that there does not exist submission for that assignment.
+                            </li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>
+                            The design is used for peroforme the task to show number of postings for each assignment for each student and comparing with peer situation.
+                            </li>
+                            <li>
+                            It is hard to compare the semester aggregared data for students within the class through this visualization. In order to do that metrics need to be constructed.
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </section>

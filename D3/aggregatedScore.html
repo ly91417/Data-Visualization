@@ -74,15 +74,13 @@
             // so we don't accidentally write things off of the canvas, give us a little breathing room
             var margins = {top: 140, right: 20, bottom: 40, left: 20};
             // modifying these variables should neatly update everything else
-            var width = 3 * window.innerWidth;
+            var width = 1.5*window.innerWidth;
             var height = 5* window.innerHeight;
             var txtWidth = 200;
             var visWidth = width - txtWidth;
 
             // color for late hours
             var colorCalibration = ['#a50026','#d73027','#f46d43','f46d43','#fdae61','#fee08b','#ffffbf','#d9ef8b','a6d96a','66bd63','#1a9850','#006837'];
-            var colorScale = d3.scale.linear().domain([0,3000]).range(["#9e0142","#006837"]);
-
 
             var svg = d3.select('body').append('svg')
                 .attr('width', width + margins.left + margins.right)
@@ -103,7 +101,7 @@
 
             // scale for determining name positions
             var y = d3.scale.ordinal()
-                .rangeRoundBands([0, height], 0.1);
+                .rangeRoundBands([0, height], 0.5);
             // get the data via an asynchronous call, then call our updateVis function
             // see <https://github.com/d3/d3-3.x-api-reference/blob/master/Requests.md#d3_json>
             // NOTE: you must run this page from within a webserver to get this to work (security concerns)
@@ -162,7 +160,7 @@
                 // create a scale to manage the width of the rectangle, 
                 // which communicates the # of posts made for an assignment
                 var posts = d3.scale.linear()
-                    .domain([0, 1500])
+                    .domain([0, 2500]) //1580 was calculated as median
                     .range([0, x.rangeBand()/2])
                     .clamp(true);
                 var noPosts=d3.scale.linear()
@@ -174,36 +172,68 @@
                 var assignment = assignments.append('g')
                     .attr('class', 'score')
 
-                assignments.append('rect')
-                    .attr('y', -y.rangeBand() / 2 ) //arrange the position for the text
-                    .attr('height', function(assignment){
-                        return noPosts(assignment.posts.length);
-                    })//y.rangeBand() / 1.5)
-                    .attr('width', function(assignment) { 
-                        if(assignment.posts.length==0){
-                            return 0;
-                        }
-                        var j;
-                        ave = 0;
-                        count = 0;
-                        for(j=0; j<assignment.posts.length; j++) {
-                            count += assignment.posts[j].length;
-                        }
-                        ave = count/j;
-                        //return assignment.posts.length == 0 ? 0 : colorScale(ave);
-                        return posts(ave); 
-                    })
-                    .style('fill', function(assignment){
-                        var j;
-                        ave = 0;
-                        count = 0;
-                        for(j=0; j<assignment.posts.length; j++) {
-                            count += assignment.posts[j].length;
-                        }
-                        ave = count/j;
-                        return assignment.posts.length == 0 ? 0 : colorScale(ave);
-                        //return colorCalibration[student.posts.length];
-                    })
+                var scoreScale=d3.scale.linear()
+                    .domain([0,findScoreRange(data)])
+                    .range([0, y.rangeBand()])
+                    .clamp(true);
+
+
+                var colorScale = d3.scale.linear().domain([0,findScoreRange(data)]).range(["#b2182b","#66bd63"]);    
+                assignments.append('circle')
+                            .attr('r',function(assignment){
+                                if(assignment.posts.length==0){
+                                    return 0;
+                                }
+                                var j;
+                                ave = 0;
+                                count = 0;
+                                for(j=0; j<assignment.posts.length; j++) {
+                                    count += assignment.posts[j].length;
+                                }
+                                ave = count/j;
+                                if(ave >2500) {
+                                    ave=2500;
+                                }
+                                console.log(ave);
+                                return posts(ave); 
+                                
+                            })
+                            .attr('transform', 'translate(5 , 0)' )
+                            .style('fill', function(d){
+                                return colorScale(d.score);
+                            });
+
+                // assignments.append('rect')
+                //     .attr('y', -y.rangeBand() / 2 ) //arrange the position for the text
+                //     .attr('height', function(assignment){
+                //         return noPosts(assignment.posts.length);
+                //     })//y.rangeBand() / 1.5)
+                //     .attr('width', function(assignment) { 
+                //         if(assignment.posts.length==0){
+                //             return 0;
+                //         }
+                //         var j;
+                //         ave = 0;
+                //         count = 0;
+                //         for(j=0; j<assignment.posts.length; j++) {
+                //             count += assignment.posts[j].length;
+                //         }
+                //         ave = count/j;
+                //         return posts(ave); 
+                //         // return posts(1500);
+                //     })
+                //     .style('fill', function(assignment){
+                //         var j;
+                //         ave = 0;
+                //         count = 0;
+                //         for(j=0; j<assignment.posts.length; j++) {
+                //             count += assignment.posts[j].length;
+                //         }
+                //         ave = count/j;
+                //         console.log(ave);
+                //         return assignment.posts.length == 0 ? 0 : colorScale(ave);
+                //         //return colorCalibration[student.posts.length];
+                //     })
                 
                 // sconsole.log(assignments); 
                 var students=[];
@@ -296,6 +326,18 @@
 
 
             }
+            function findScoreRange(data) {
+                var global_max = 5;
+                for(var i = 0; i < data.students.length; i++) {
+                    for(var j = 0 ; j < data.students[i].grades.length; j++) {
+                        var score = data.students[i].grades[j].score;    
+                        if(score > global_max) {
+                            global_max = score;
+                        }
+                    }
+                }
+                return global_max;
+            }
 
         </script>
         <table class="table-responsive">
@@ -308,26 +350,23 @@
                 <tr>
                     <td style=" text-align: left; valign: top; whitespace: nowrap;">
                     <ul>
-                        <li>For this visualization, the task is to show the scores of students over the semester and also considering the number of posts and length of posts.
+                        <li>For this visualization, the task is to show the scores of students over the semester and also considering the average posting length which is aggregated data for each posting.
                         </li>
                     </ul>
                     </td>
                     <td>
                         <ul>
                             <li>
-                            The existance of the rectagular is used to encode for weather submission was done or not. If no submission was done, then the data was considered late submission.<span style="color: green"><em>(ex: the submission could be zero score if there is still rectagular exists then it means submission was done)</em></span>
+                            The existance of the circle is used to encode for weather submission was done or not. If no submission was done, then the data was considered late submission.<span style="color: green"><em>(ex: the submission could be zero score if there is still circle exists then it means submission was done)</em></span>
                             </li>
                             <li>
-                            The height of the rectagular is encoded for the number of posts for that specific assignment <span style="color: green"><em>(ex: the submission could be with a lot of postings which will induce a very high bar)</em></span>
+                            The radius of the circle is encoded for the average length of posting for the specific assignment<span style="color: green"><em>(ex: the submission could have big or small circles which encode for the length of submission)</em></span> The area of the circles are utilized as indicator of average length
                             </li>
                             <li>
-                            The width of the rectagualar is encoded for the average length of posting for the specific assignment<span style="color: green"><em>(ex: the submission could be wit a very wide rectagular with stand for long average posting)</em></span> This information could be used to compare if some one's average posting length is relatively good comparing to his/her posting numbers.
+                            The color of the circle is used to indicate the scoring of each assignment. Green ones means good score and red ones means bad scoring.<span style="color: green"><em>(ex: it is easier to compare which area of assignments are good at scoring)</em></span>
                             </li>
                             <li>
-                            The color of the rectagular is redundant encoded for the average posting length under which green encode for larger value and purple encode for smaller value. Since it is very complicated and hard to compare two dimensionality at the same time, using color as reduandant encoding could bring more power to compare two people.<span style="color: green"><em>(ex: it is much easier to compare two students who have very similar posting lengths for specific assignment since the color is used for comparision and it enhanced the contrast)</em></span>
-                            </li>
-                            <li>
-                            The olor of the score is selected to encode for the late submission where red and bold style stand for the late submission or score not available
+                            The color of the score is selected to encode for the late submission where red and bold style stand for the late submission or score not available
                             </li>
                         </ul>
                     </td>
