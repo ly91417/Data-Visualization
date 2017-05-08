@@ -1,1 +1,1 @@
-var path = "~/765-old-anon.json";
+var path = "765-old-anon.json";

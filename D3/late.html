@@ -23,6 +23,12 @@
             margin: auto;
             float:right;
         }
+        .ramp{
+            width:60px;
+            height: 60px;
+            float: left;
+            margin: 2px;
+        }
         
     </style>
 
@@ -65,6 +71,7 @@
     <section class = "main_section">
         <div class = "assignments_score" >
         <script src="//d3js.org/d3.v3.min.js"></script>
+        <script src="main.js"> </script>
         <script id = "assignment">
 
             // so we don't accidentally write things off of the canvas, give us a little breathing room
@@ -106,7 +113,7 @@
             //   use something like <https://www.npmjs.com/package/http-server> or 
             //   Python's HTTP Server: `python -m SimpleHTTPServer`.
             // anonymous function here is a call back function and will execute after the d3.json function excuted 
-            d3.json("../../RealisticData/765-old-anon.json", function(error, data) {
+            d3.json("" + path, function(error, data) {
                 updateVis(data);
             });
             function updateVis(data) {
@@ -162,19 +169,9 @@
                 var assignment = assignments.append('g')
                     .attr('class', 'score')
 
-                // assignments.append('rect')
-                //     .attr('y', -y.rangeBand() / 2 ) //arrange the position for the text
-                //     .attr('height', y.rangeBand() / 1.5)
-                //     .attr('width', function(student) { 
-                //         return posts(student.posts.length); 
-                //     })
-                //     .style('fill', function(student){
-                //         //return colorScale(d.posts.length);
-                //         return colorCalibration[student.posts.length];
-                //     })
                 assignments.append('circle')
                             .attr('r',width/200)
-                            .attr('transform', 'translate(0 +, 0)' )
+                            .attr('transform', 'translate(5 , 0)' )
                             .style('fill', function(assignment){
                                 if(assignment.late < 0 ) {
                                     var ealierTime = Math.abs(assignment.late);
@@ -208,8 +205,8 @@
                     })
 
                     .text(function(d) { 
-                        console.log(d);
-                        return d3.format(".2n")(d.score); })
+                        //console.log(d);
+                        return d3.format(".1f")(d.score); })
                     ;   //+ ' ' +  d.late + ' hr': d.score d3.format(".3n")  0.00
 
                 svg.append("g")
@@ -225,6 +222,39 @@
                     .style('font-size','30px')
                     .style('fill','white')
                     .text('Assignments Late Submissions HeatMap');
+
+                var  body = d3.select('body');
+                for(var i = 0; i<10; i++) {
+                body.append('div').attr('style',function(d){
+                        return 'background-color: ' + colorCalibration[9-i];
+                    })
+                    .attr('class','ramp')
+                    .attr('transform', 'translate(' +(width/2 + txtWidth)+ ',-100)');
+                
+
+                body.append('text')
+                    .attr('class', 'ramp')
+                    .attr('transform', 'translate(' +(width/2 + txtWidth)+ ',height)')
+                    .style('fill',colorCalibration[i])
+                    .text(
+                        function(d){
+                            var late4Hour = i+1;
+                            if( late4Hour >= 10 ){
+                                late4Hour = 10;
+                                return "Late > 48hr"
+                            }
+                            else{
+                                if(late4Hour >= 6 ) {
+                                    return "Late >" + d3.format(".1f")((i+1)*4.8) +' hr';
+                                }
+                                else{
+                                    return "Earlier >" + d3.format(".1f")((i+1)*4.8) +' hr';
+                                }
+                                
+                            }
+                        }
+                    );
+                }
             }
 
         </script>

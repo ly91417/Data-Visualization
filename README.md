@@ -12,3 +12,6 @@ SimpleData: Some example files that are very simple (you cannot use these as the
 
 D3: An example webpage using D3 to make a visualization of an example gradebook file.
 # Data-Visualization
+
+##Purpose of use
+The program here is utilized for grading purpose of CS765 UW-Madison as a Desgin Chanllenge

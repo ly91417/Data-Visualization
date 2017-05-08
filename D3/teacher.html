@@ -217,7 +217,7 @@
                     .style('font-size','30px')
                     .style('fill','white')
                     .text('Assignments Number of Postings HeatMap');
-                console.log(d3.select('body'));
+                //console.log(d3.select('body'));
 
                 
             }
@@ -233,17 +233,18 @@
                     .attr('class', 'ramp')
                     .attr('transform', 'translate(' +(width/2 + txtWidth)+ ',height)')
                     .style('fill',colorCalibration[i])
-                    .text(function(d){
-                        var postNo = i+1;
-                        if( postNo >= 10 ){
-                            psotNo = 10;
-                            return "10 and more posts"
+                    .text(
+                        function(d){
+                            var postNo = i+1;
+                            if( postNo >= 10 ){
+                                psotNo = 10;
+                                return "10 and more posts"
+                            }
+                            else{
+                                return i+1 +' post';
+                            }
                         }
-                        else{
-                            return i+1 +' post';
-                        }
-                    }
-                        );
+                    );
             }
 
         </script>
