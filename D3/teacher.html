@@ -36,6 +36,9 @@
             height:100px;
             width: 100%;
         }
+        table, th, td, li {
+        border: 2px solid black;
+        }
         
     </style>
 
@@ -283,14 +286,10 @@
                     <td>
                         <ul>
                             <li>
-                            The color of the rectangular is used to encode the number of posting for assignment. The detail is in the color ramp in the bottom. The color selection is utilized a diverging set for great comparison purpose.
+                            The color of the rectangular is used to encode the number of posting for assignment. The detail is in the sequential color ramp in the bottom. The color set chose a diverging set for better comparison purpose.
                             </li>
                             <li>
-                            A red 'L' sign is selected as encoding of late submission information.
-                            If the rectangular is not existing, this is purposely designed to indicate that there does not exist submission for that assignment.
-
-                            </li>
-                            <li>
+                            A red <span style="color: red">L</span> sign is selected as encoding of late submission information.
                             If the rectangular is not existing, this is purposely designed to indicate that there does not exist submission for that assignment.
                             </li>
                         </ul>
@@ -298,11 +297,10 @@
                     <td>
                         <ul>
                             <li>
-                            However, there are some defects of the design. The design is used for performing the task to show number of postings for each assignment for each student and comparing with peer situation.
+                            The design is used for performing the task to show number of postings for each specific assignment for each student and comparing with peer situation.
                             </li>
                             <li>
-                           It is hard to compare the semester aggregated data for students within the class through this visualization with this visualization. You can have a sense of how many posts the student have done through the semester. In order to do that metrics need to be constructed.
-
+                            It is hard to compare the semester aggregated data for students within the class through this visualization. <span style="color: green">(You can have a sense of how many posts the student have done through the semester.)</span> In order to do comparision between two students, some metrics need to be constructed.
                             </li>
                         </ul>
                     </td>
