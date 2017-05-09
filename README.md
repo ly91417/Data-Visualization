@@ -21,3 +21,13 @@ pleaes visit the report through:
 https://docs.google.com/document/d/1upXnJ8Oh-nUnWOAXGYLU8QmI01b3_wiNmEbrwMYXXRM/edit?usp=sharing
 
 Please use the http-server to open the web-browser to view.
+
+![ScreenShot](no_of_submission_heat.png)
+
+![ScreenShot](score.png)
+
+![ScreenShot](late_heat.png)
+
+![ScreenShot](ave_length.png)
+
+![ScreenShot](late.png)
