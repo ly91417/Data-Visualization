@@ -24,7 +24,10 @@ Please use the http-server to open the web-browser to view.
 
 Some sampled output are listed here for review:
 
-![ScreenShot](no_of_submission_heat.png)
+![ScreenShot](submission_heat.png)
+
+
+
 
 ![ScreenShot](score.png)
 
