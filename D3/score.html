@@ -38,33 +38,52 @@
     <head>
         <title > CS765 Design Challenge 3</title>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="main.css">
     </head>
     
     <body>
         <header class = "top-header" id="webiste_header">
             <h1 style='font-size:25px'>Design Challenge 3: CS765 Data Visualization<br/>  </h1>
-            <nav style="text-align:center" class="top-nav">
-                <a style="text-align:center" href="score.html">[Scoring Overview] <br/></a>
-                <a style="text-align:center" href="late.html">[Late Submission Overview]  </a>
-                <a style="text-align:center" href="length.html">[Discussion Length Overview] <br/></a>
-                <a style="text-align:center" href="index.html">[Back to Initial Page] <br/></a>
-            </nav>    
+            <nav style="text-align:center;" class="top-nav">
+                <a style="text-align:center" href="http://graphics.cs.wisc.edu/WP/vis17/2017/04/07/design-challenge-3-a-real-problem/">[Project Description]</a>
+                <a style="text-align:center" href="http://graphics.cs.wisc.edu/WP/vis17/course-announcement/">[Course Description]</a>
+                <a style="text-align:center" href="invistigator.html">[CS Dean's Perspective]</a>
+                <a style="text-align:center" href="about.html">[About]</a>
+            </nav>
+            <span id="welcome-msg">Welcome to grade us!</span>
         </header>
+        <div class = "container">
+            <header>
+                <p style="text-align:center; font-size:36px">
+                    <span>CS765 Spring 2017</span>
+                    <br /> Grading System
+                </p>
+            </header>
+        </div>
         <aside id="perspective-nav">
-        <nav class="main-nav">
-          <a href="teacher.html" id="teacher-btn" class="main-nav-btn active">
-            <i class="fa fa-tasks" aria-hidden="true"></i> Teacher
-          </a>
-          <a href="student.html" id="student-btn" class="main-nav-btn">
-            <i i class="fa fa-graduation-cap" aria-hidden="true"></i> Student
-          </a>
-          <a href="about.html" id="about-btn" class="main-nav-btn">
-            <i class="fa fa-eye" aria-hidden="true"> </i> About
-          </a>
-        </nav>
-      </aside>
+            <nav class="navbar navbar-inverse visible-xs">
+              <a href="teacher.html" id="teacher-btn" class="main-nav-btn">
+                <i class="fa fa-tasks" aria-hidden="true"></i> Number of Postings
+              </a>
+              <a href="length.html" id="student-btn" class="main-nav-btn">
+                <i i class="fa fa-graduation-cap" aria-hidden="true"></i> Length of Postings
+              </a>
+              <a href="late.html" id="about-btn" class="main-nav-btn">
+                <i class="fa fa-eye" aria-hidden="true"> </i> Lateness
+              </a>
+              <a href="score.html" id="about-btn" class="main-nav-btn">
+                <i class="fa fa-btc" aria-hidden="true"> </i> Scores
+              </a>
+              <a href="lateVari.html" id="about-btn" class="main-nav-btn">
+                <i class="fa fa-clipboard" aria-hidden="true"> </i> Late Variation
+              </a>
+
+            </nav>
+        </aside>
     <section class = "main_section">
         <div class = "assignments_score" >
         <script src="//d3js.org/d3.v3.min.js"></script>
@@ -308,39 +327,34 @@
                 <tr>
                     <td style=" text-align: left; valign: top; whitespace: nowrap;">
                     <ul>
-                        <li>For this visualization, the task is to show the scores of students over the semester and also considering the number of posts and length of posts.
+                        <li>The task for this visualization is to show the scores of students over the semester and also explore the influence of number of postings and average length of postings on the score the student got for the specific assignment.  
                         </li>
                     </ul>
                     </td>
                     <td>
                         <ul>
                             <li>
-                            The existance of the rectagular is used to encode for weather submission was done or not. If no submission was done, then the data was considered late submission.<span style="color: green"><em>(ex: the submission could be zero score if there is still rectagular exists then it means submission was done)</em></span>
+                            The existence of the rectangular is used to encode the binary information that weather submission was done or not. If no submission was done, then the data was considered late submission.
                             </li>
                             <li>
-                            The height of the rectagular is encoded for the number of posts for that specific assignment <span style="color: green"><em>(ex: the submission could be with a lot of postings which will induce a very high bar)</em></span>
+                            The height of the rectangular is encoded for the number of posts for that specific assignment  <span style="color: green"><em>(ex: the submission could be with a lot of postings which will induce a very high bar)</em></span>
                             </li>
                             <li>
-                            The width of the rectagualar is encoded for the average length of posting for the specific assignment<span style="color: green"><em>(ex: the submission could be wit a very wide rectagular with stand for long average posting)</em></span> This information could be used to compare if some one's average posting length is relatively good comparing to his/her posting numbers.
+                            The width of the rectangular is encoded for the average length of posting for the specific assignment<span style="color: green"><em>(ex: the submission could be wit a very wide rectagular with stand for long average posting)</em></span> This information could be used to compare if some one's average posting length is relatively good comparing to his/her posting numbers. 
                             </li>
                             <li>
-                            The color of the rectagular is redundant encoded for the average posting length under which green encode for larger value and purple encode for smaller value. Since it is very complicated and hard to compare two dimensionality at the same time, using color as reduandant encoding could bring more power to compare two people.<span style="color: green"><em>(ex: it is much easier to compare two students who have very similar posting lengths for specific assignment since the color is used for comparision and it enhanced the contrast)</em></span>
+                            The color of the rectangular is redundant encoded for the average posting length under which green encode for larger value and purple encode for smaller value. Since it is very complicated and hard to compare two dimensionality at the same time, using color as redundant encoding could bring more power to compare two people.<span style="color: green"><em>(ex: it is much easier to compare two students who have very similar posting lengths for specific assignment since the color is used for comparision and it enhanced the contrast)</em></span>
                             </li>
                             <li>
-                            The olor of the score is selected to encode for the late submission where red and bold style stand for the late submission or score not available
+                           The color of the score is selected to encode for the late submission where red and bold style stand for the late submission or score not available in the data source.
                             </li>
                         </ul>
                     </td>
                     <td>
                         <ul>
                             <li>
-                            The system does not have a backend server and it is hard to perform complicated aggregation manipulation without precomputing and storage in database. 
-                            </li>
-                            <li>
-                            If time permits, the interaction could be involved in to further analysis for individual data rather than only overview
-                            </li>
-                            <li>
-                            If time permits, several creteria based sorting should be applied
+                            However, the visualization have some defects like The system does not have a backend server and it is hard to perform complicated aggregation manipulation without pre-computing and storage in database. If time permits, the interaction could be involved in to further analysis for individual data rather than only overview If time permits, several criteria based sorting should be applied.
+
                             </li>
                         </ul>
                     </td>

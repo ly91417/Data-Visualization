@@ -18,23 +18,16 @@
         }
         #website_header{
            text-align: center;
-           float: left;
-           font: 10px sans-serif;
         }
         .assignments_score{
             margin: auto;
-            float: left;
-            font: 10px sans-serif;
+            float:right;
         }
         .ramp{
             width:60px;
             height: 60px;
             float: left;
             margin: 2px;
-        }
-        .discription{
-            height:100px;
-            width: 100%;
         }
         
     </style>
@@ -88,25 +81,24 @@
 
             </nav>
         </aside>
-        </aside>
     <section class = "main_section">
         <div class = "assignments_score" >
         <script src="//d3js.org/d3.v3.min.js"></script>
-        <script src="main.js"></script>
+        <script src="main.js"> </script>
         <script id = "assignment">
 
             // so we don't accidentally write things off of the canvas, give us a little breathing room
             var margins = {top: 140, right: 20, bottom: 40, left: 20};
             // modifying these variables should neatly update everything else
-            var width =  window.innerWidth;
-            var height = 5 * window.innerHeight;
+            var width = 3*window.innerWidth;
+            var height = 5*window.innerHeight;
             var txtWidth = 200;
             var visWidth = width - txtWidth;
 
             // color for late hours
-            var colorCalibration = ['#7f3b08','#b35806','#e08214','#fdb863','#fee0b6','#f7f7f7','#d8daeb','#b2abd2','#8073ac','#542788','#2d004b'];
-            var colorScale = d3.scale.linear().domain([0,60]).range([d3.rgb("#fff7fb"),d3.rgb("#023858")]);
-
+            var colorCalibration = ['#a50026','#930c28','#f46d43','#fdae61','#fee08b','#d9ef8b','#a6d96a','#66bd63','#1a9850','#006837'];
+            var colorScale = d3.scale.linear().domain([0,48]).range([d3.rgb("#d9ef8b"),d3.rgb("#006837")]);
+            var lateclolorScale = d3.scale.linear().domain([0,48]).range([d3.rgb("#fee08b"),d3.rgb("#a50026")]);
 
             var svg = d3.select('body').append('svg')
                 .attr('width', width + margins.left + margins.right)
@@ -118,7 +110,7 @@
             // see <https://github.com/d3/d3-3.x-api-reference/blob/master/Ordinal-Scales.md#ordinal>
             //rangeRoundBands will load interval and the second parameter is the outer padding in percentage
             var x = d3.scale.ordinal()
-                .rangeRoundBands([0, visWidth], 0.1);
+                .rangeRoundBands([0, visWidth], 0.3);
 
 
             var xAxis = d3.svg.axis().scale(x).orient("top");
@@ -190,27 +182,36 @@
                 var assignment = assignments.append('g')
                     .attr('class', 'score')
 
-                assignments.append('rect')
-                    .attr('y', -y.rangeBand() / 2 ) //arrange the position for the text
-                    .attr('height', y.rangeBand() / 1.1 )
-                    .attr('width', function(s) { 
-                        //console.log(s);
-                        if(s.posts.length==0) {
-                            return posts(0);
-                        }else{
-                            return posts(11);//student.posts.length); 
-                        }          
-                    })
-                    .style('fill', function(student){
-                        //return colorScale(student.posts.length);
-                        return colorCalibration[ student.posts.length > 10? 10 : student.posts.length];
-                    });   
+                assignments.append('circle')
+                            .attr('r',width/200)
+                            .attr('transform', 'translate(5 , 0)' )
+                            .style('fill', function(assignment){
+                                if(assignment.late <= 0 ) {
+                                    var ealierTime = Math.abs(assignment.late);
+                                    if(ealierTime > 48) {
+                                        ealierTime = 48;
+                                    }
+                                    return '#434343';//colorScale(ealierTime);
+                                }
+                                else{
+                                    var lateTime = assignment.late;
+                                    if(lateTime==0 && assignment.posts.length==0){
+                                        return '#a50026';
+                                    }
+                                    if(lateTime > 48) {
+                                        lateTime = 48;
+                                    }
+                                    return lateclolorScale(lateTime);
+                                } 
+                            });
+               
+               
                 // the score for each assignment; color red if the assignment was late
                 assignments.append('text')
                     .attr('x', x.rangeBand() / 2)
                     .style('text-anchor', 'middle')
                     .style('fill', function(d) { 
-                        return d.late > 0 ? 'red' : 'black'; 
+                        return d.late <= 0 ? '#e41a1c' : '#33a02c'; 
                     })
                     .style('font-weight', function(d) {
                         return d.late > 0 ? 'bold' : 'normal;'
@@ -219,90 +220,105 @@
                         return d.late > 0 ? 'times' : 'sans-serif';
                     })
 
-                    .text(function(d) { return d.late > 0? 'L' : ''; })
-                    ;   //+ ' ' +  d.late + ' hr': d.score
+                    .text(function(d) { 
+                        //console.log(d);
+                        if(d.posts.length == 0) {
+                            return 'M';
+                        }
+                        return d.late >0? d3.format(".0f")(d.late) + 'hr' : ''; })
+                    ;   //+ ' ' +  d.late + ' hr': d.score d3.format(".3n")  0.00
 
-                svg.append('g')
+                svg.append("g")
                     .attr("class", "x_axis")
                     .attr('transform', 'translate(' + txtWidth+ ',-20)')
                     .style('fill','white')
                     .call(xAxis);
 
-                svg.append('text')
+                svg.append("text")
                     .attr('transform', 'translate(' +(width/2 + txtWidth)+ ',-100)')
                     .attr('text-anchor', 'middle') 
                     .attr('text-align', 'center')
                     .style('font-size','30px')
                     .style('fill','white')
-                    .text('Assignments Number of Postings HeatMap');
-                //console.log(d3.select('body'));
+                    .text('Assignments Late Submissions HeatMap');
 
-                
-            }
-
-            var  body = d3.select('body');
-            for(var i = 0; i<10; i++) {
+                var  body = d3.select('body');
+                for(var i = 0; i<10; i++) {
                 body.append('div').attr('style',function(d){
-                        return 'background-color: ' + colorCalibration[i];
+                        return 'background-color: ' + colorCalibration[9-i];
                     })
                     .attr('class','ramp')
                     .attr('transform', 'translate(' +(width/2 + txtWidth)+ ',-100)');
+                
+
                 body.append('text')
                     .attr('class', 'ramp')
                     .attr('transform', 'translate(' +(width/2 + txtWidth)+ ',height)')
                     .style('fill',colorCalibration[i])
                     .text(
                         function(d){
-                            var postNo = i+1;
-                            if( postNo >= 10 ){
-                                psotNo = 10;
-                                return "10 and more posts"
+                            var late4Hour = i+1;
+                            if( late4Hour >= 10 ){
+                                late4Hour = 10;
+                                return "Late > 48hr"
                             }
                             else{
-                                return i+1 +' post';
+                                if(late4Hour >= 6 ) {
+                                    return "Late > " + d3.format(".1f")((i-1)*4.8) +'hr';
+                                }
+                                else{
+                                    return "Earlier < " + d3.format(".1f")((8.5-i)*4.8) +'hr';
+                                }
+                                
                             }
                         }
                     );
+                }
             }
 
         </script>
          <table class="table-responsive">
-            <thead class='description' style="color:yellow; text-align: center; font-weight: bold; font-size: 2em;" >
+            <thead class='description' style="color:yellow; text-align: center; font-weight: bold">
                 <td>Task</td>
                 <td>Encodings</td>
                 <td>Defects</td>
             </thead>
-            <tbody style="color:white; text-align: left; font-weight; font-size:2em;">
+            <tbody style="color:white; text-align: left; font-weight: bold">
                 <tr>
                     <td style=" text-align: left; valign: top; whitespace: nowrap;">
                     <ul>
-                        <li>For this visualization, the task is to show number of postings for each assignment for each student and compare the number of post with peer's situation. 
+                        <li>For this visualization, the task is to explore the late submissions patterns of each student 
                         </li>
                     </ul>
                     </td>
                     <td>
                         <ul>
                             <li>
-                            The color of the rectangular is used to encode the number of posting for assignment. The detail is in the color ramp in the bottom. The color selection is utilized a diverging set for great comparison purpose.
+                            The x axis is the assignments throught the semester which could be encoding time or sequence of assignments
                             </li>
                             <li>
-                            A red 'L' sign is selected as encoding of late submission information.
-                            If the rectangular is not existing, this is purposely designed to indicate that there does not exist submission for that assignment.
-
+                            The y axis is the alphabetical ordered students
                             </li>
                             <li>
-                            If the rectangular is not existing, this is purposely designed to indicate that there does not exist submission for that assignment.
+                            The exists of the circle can be used to encode the late submission information 
                             </li>
+                            <li>
+                            The color of the circle and the numerical value of late hours are chosen to redundantly encode the lateness of submission
+                            </li>
+                            <li>
+                            Label M with red font is utilized to encode the missing submission information
+                            </li>
+                            
                         </ul>
                     </td>
                     <td>
                         <ul>
+                            
                             <li>
-                            However, there are some defects of the design. The design is used for performing the task to show number of postings for each assignment for each student and comparing with peer situation.
+                            One of the petential secondary task could be to find the lateness between groups. In order to do that, we need more information of group assignment for each posting of each student. This could be done with more time and more data filed in the data source. 
                             </li>
                             <li>
-                           It is hard to compare the semester aggregated data for students within the class through this visualization with this visualization. You can have a sense of how many posts the student have done through the semester. In order to do that metrics need to be constructed.
-
+                            Aggregated information of each student's score need to be provided to compare the lateness effect on the final score.    
                             </li>
                         </ul>
                     </td>
@@ -310,4 +326,6 @@
             </tbody>
         </table>
     </div>
+
+
 </section>

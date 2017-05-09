@@ -31,38 +31,55 @@
         }
         
     </style>
-
-    <head>
+<head>
         <title > CS765 Design Challenge 3</title>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="main.css">
     </head>
     
     <body>
-         <header class = "top-header" id="webiste_header">
+        <header class = "top-header" id="webiste_header">
             <h1 style='font-size:25px'>Design Challenge 3: CS765 Data Visualization<br/>  </h1>
-            <nav style="text-align:center" class="top-nav">
-                <a style="text-align:center" href="score.html">[Scoring Overview] <br/></a>
-                <a style="text-align:center" href="late.html">[Late Submission Overview]  </a>
-                <a style="text-align:center" href="length.html">[Discussion Length Overview] <br/></a>
-                <a style="text-align:center" href="index.html">[Back to Initial Page] <br/></a>
-            </nav>    
+            <nav style="text-align:center;" class="top-nav">
+                <a style="text-align:center" href="http://graphics.cs.wisc.edu/WP/vis17/2017/04/07/design-challenge-3-a-real-problem/">[Project Description]</a>
+                <a style="text-align:center" href="http://graphics.cs.wisc.edu/WP/vis17/course-announcement/">[Course Description]</a>
+                <a style="text-align:center" href="invistigator.html">[CS Dean's Perspective]</a>
+                <a style="text-align:center" href="about.html">[About]</a>
+            </nav>
+            <span id="welcome-msg">Welcome to grade us!</span>
         </header>
-            
+        <div class = "container">
+            <header>
+                <p style="text-align:center; font-size:36px">
+                    <span>CS765 Spring 2017</span>
+                    <br /> Grading System
+                </p>
+            </header>
+        </div>
         <aside id="perspective-nav">
-        <nav class="main-nav">
-          <a href="teacher.html" id="teacher-btn" class="main-nav-btn active">
-            <i class="fa fa-tasks" aria-hidden="true"></i> Teacher
-          </a>
-          <a href="student.html" id="student-btn" class="main-nav-btn">
-            <i i class="fa fa-graduation-cap" aria-hidden="true"></i> Student
-          </a>
-          <a href="about.html" id="about-btn" class="main-nav-btn">
-            <i class="fa fa-eye" aria-hidden="true"> </i> About
-          </a>
-        </nav>
-      </aside>
+            <nav class="navbar navbar-inverse visible-xs">
+              <a href="teacher.html" id="teacher-btn" class="main-nav-btn">
+                <i class="fa fa-tasks" aria-hidden="true"></i> Number of Postings
+              </a>
+              <a href="length.html" id="student-btn" class="main-nav-btn">
+                <i i class="fa fa-graduation-cap" aria-hidden="true"></i> Length of Postings
+              </a>
+              <a href="late.html" id="about-btn" class="main-nav-btn">
+                <i class="fa fa-eye" aria-hidden="true"> </i> Lateness
+              </a>
+              <a href="score.html" id="about-btn" class="main-nav-btn">
+                <i class="fa fa-btc" aria-hidden="true"> </i> Scores
+              </a>
+              <a href="lateVari.html" id="about-btn" class="main-nav-btn">
+                <i class="fa fa-clipboard" aria-hidden="true"> </i> Late Variation
+              </a>
+
+            </nav>
+        </aside>
     <section class = "main_section">
         <div class = "assignments_score" >
         <script src="//d3js.org/d3.v3.min.js"></script>
@@ -177,6 +194,9 @@
                                 }
                                 else{
                                     var lateTime = assignment.late;
+                                    if(lateTime==0 && assignment.posts.length==0){
+                                        return '#434343';
+                                    }
                                     if(lateTime > 48) {
                                         lateTime = 48;
                                     }
@@ -270,32 +290,33 @@
                     <td>
                         <ul>
                             <li>
-                            The x axis is the assignments throught the semester which could be encoding time or sequence of assignments
+                            The x axis is the assignments through the semester which could be encoding time or sequence of assignments.
                             </li>
                             <li>
-                            The y axis is the alphabetical ordered students
+                           The y axis is the alphabetical ordered students.
                             </li>
                             <li>
-                            The color of the circle is used to encode the lateness of submission or the early submission. This information could be utilized to explore the submission pattern of some specific student<span style="color: green"><em> (ex. always late or never start early)</em></span>, to explore the submission pattern for group of student through semester<span style="color: green"> <em> (ex. some students from same group tend to start earlier than other group, for initial submissions there exsit lot of lateness)</em></span>
+                            The exist of circle was encoded as a boolean variable to encode the missing posting or not. 
+                            </li>
+                            <li>
+                            The color of the circle is used to encode the lateness of submission or the early submission. This information could be utilized to explore the submission pattern of some specific student<span style="color: green"><em> (ex. always late or never start early)</em></span>, to explore the submission pattern for group of student through semester<span style="color: green"> <em> (ex. some students from same group tend to start earlier than other group, for initial submissions there exist lot of lateness)</em></span>
                             </li>
                             <li>
                             The score are provided with each circle as the assignment score encoded in the text. Along with the lateness encoded in color discussed before, this score can be utilized to explore the influence of lateness in scoring when compared to peers<span style="color: green"><em>(ex. some students have lateness still got high score which is not commen to see )</em></span>
                             </li>
                             <li>
-                            The color of the score is encoded for late submission information in which red is late submissions and yellow ones are regular submissions. This information could be used to explore teh pattern of lateness and the high contrast of color in red and black could be more easier to conclude how much portion of submissions a student have made.
+                            The color of the score is encoded for late submission information in which red is late submissions and yellow ones are regular submissions. This information could be used to explore the pattern of lateness and the contrast of color in red and black could be more easier to conclude how much portion of submissions a student have made. 
                             </li>
                         </ul>
                     </td>
                     <td>
                         <ul>
+                            
                             <li>
-                            The system does not have a backend server and it is hard to perform complicated aggregation manipulation without precomputing and storage in database. 
+                            One of the petential secondary task could be to find the lateness between groups. In order to do that, we need more information of group assignment for each posting of each student. This could be done with more time and more data filed in the data source. 
                             </li>
                             <li>
-                            If time permits, the interaction could be involved in to further analysis for individual data rather than only overview
-                            </li>
-                            <li>
-                            If time permits, more aggregated data should be calculated
+                            Aggregated information of each student's score need to be provided to compare the lateness effect on the final score.    
                             </li>
                         </ul>
                     </td>

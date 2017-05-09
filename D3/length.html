@@ -39,32 +39,50 @@
     <head>
         <title > CS765 Design Challenge 3</title>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="main.css">
     </head>
     
     <body>
         <header class = "top-header" id="webiste_header">
             <h1 style='font-size:25px'>Design Challenge 3: CS765 Data Visualization<br/>  </h1>
-            <nav style="text-align:center" class="top-nav">
-                <a style="text-align:center" href="score.html">[Scoring Overview] <br/></a>
-                <a style="text-align:center" href="late.html">[Late Submission Overview]  </a>
-                <a style="text-align:center" href="length.html">[Discussion Length Overview] <br/></a>
-                <a style="text-align:center" href="index.html">[Back to Initial Page] <br/></a>
-            </nav>    
+            <nav style="text-align:center;" class="top-nav">
+                <a style="text-align:center" href="http://graphics.cs.wisc.edu/WP/vis17/2017/04/07/design-challenge-3-a-real-problem/">[Project Description]</a>
+                <a style="text-align:center" href="http://graphics.cs.wisc.edu/WP/vis17/course-announcement/">[Course Description]</a>
+                <a style="text-align:center" href="invistigator.html">[CS Dean's Perspective]</a>
+                <a style="text-align:center" href="about.html">[About]</a>
+            </nav>
+            <span id="welcome-msg">Welcome to grade us!</span>
         </header>
-            
+        <div class = "container">
+            <header>
+                <p style="text-align:center; font-size:36px">
+                    <span>CS765 Spring 2017</span>
+                    <br /> Grading System
+                </p>
+            </header>
+        </div>
         <aside id="perspective-nav">
-            <nav class="main-nav">
-              <a href="teacher.html" id="teacher-btn" class="main-nav-btn active">
-                <i class="fa fa-tasks" aria-hidden="true"></i> Teacher
+            <nav class="navbar navbar-inverse visible-xs">
+              <a href="teacher.html" id="teacher-btn" class="main-nav-btn">
+                <i class="fa fa-tasks" aria-hidden="true"></i> Number of Postings
               </a>
-              <a href="student.html" id="student-btn" class="main-nav-btn">
-                <i i class="fa fa-graduation-cap" aria-hidden="true"></i> Student
+              <a href="length.html" id="student-btn" class="main-nav-btn">
+                <i i class="fa fa-graduation-cap" aria-hidden="true"></i> Length of Postings
               </a>
-              <a href="about.html" id="about-btn" class="main-nav-btn">
-                <i class="fa fa-eye" aria-hidden="true"> </i> About
+              <a href="late.html" id="about-btn" class="main-nav-btn">
+                <i class="fa fa-eye" aria-hidden="true"> </i> Lateness
               </a>
+              <a href="score.html" id="about-btn" class="main-nav-btn">
+                <i class="fa fa-btc" aria-hidden="true"> </i> Scores
+              </a>
+              <a href="lateVari.html" id="about-btn" class="main-nav-btn">
+                <i class="fa fa-clipboard" aria-hidden="true"> </i> Late Variation
+              </a>
+
             </nav>
         </aside>
         <section class = "main_section">
@@ -299,10 +317,13 @@
                     <td>
                         <ul>
                             <li>
-                            The width of rectagular and the colors were redandant encoded for the number of posts the student made for sepcific assignment.
+                            The exsit of the rectangular is utilized to encode the
                             </li>
                             <li>
-                            The color and width of the rectagular encode for the number of posts the students made for the assignment.<span style="color: green"><em>  (ex: The color ramp is shown in the bottom)</em> </span> 
+                            The width of rectagular is utlized to encode the number of posts.
+                            </li>
+                            <li>
+                            The color is used to redundantly encode for the number of posts.<span style="color: green"><em>  (ex: The color ramp is shown in the bottom)</em> </span> 
                             </li>
                             <li>
                             The text was encoded for the information of average length of postings for each student. This information could be used as a metric to show the posting quality <span style="color: green"><em>  (ex: it is cery clear to see the number of word for each post and easier to compare with different people)</em> </span> 

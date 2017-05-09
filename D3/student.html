@@ -23,55 +23,87 @@
             margin: auto;
             float:right;
         }
-        
+        .ramp{
+            width:60px;
+            height: 60px;
+            float: left;
+            margin: 2px;
+        }
+        .slection{
+            cursor: pointer;
+            float: right;
+            padding: 8px 20px;
+            text-align: right;       
+        }
     </style>
 
     <head>
         <title > CS765 Design Challenge 3</title>
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="main.css">
     </head>
     
     <body>
         <header class = "top-header" id="webiste_header">
-            <h1 style="text-align:center; font-size:25;">Grading System--Student Perspective <br/> </h1>
-            <nav style="text-align:center" class="top-nav">
-                <a style="text-align:center" href="index.html">[Back to Initial Page]</a>
-            </nav>    
+            <h1 style='font-size:25px'>Design Challenge 3: CS765 Data Visualization<br/>  </h1>
+            <nav style="text-align:center;" class="top-nav">
+                <a style="text-align:center" href="http://graphics.cs.wisc.edu/WP/vis17/2017/04/07/design-challenge-3-a-real-problem/">[Project Description]</a>
+                <a style="text-align:center" href="http://graphics.cs.wisc.edu/WP/vis17/course-announcement/">[Course Description]</a>
+                <a style="text-align:center" href="invistigator.html">[CS Dean's Perspective]</a>
+                <a style="text-align:center" href="about.html">[About]</a>
+            </nav>
+            <span id="welcome-msg">Welcome to grade us!</span>
         </header>
-            
+        <div class = "container">
+            <header>
+                <p style="text-align:center; font-size:36px">
+                    <span>CS765 Spring 2017</span>
+                    <br /> Grading System
+                </p>
+            </header>
+        </div>
         <aside id="perspective-nav">
-        <nav class="main-nav">
-          <a href="teacher.html" id="teacher-btn" class="main-nav-btn">
-            <i class="fa fa-tasks" aria-hidden="true"></i> Teacher
-          </a>
-          <a href="student.html" id="student-btn" class="main-nav-btn  active">
-            <i i class="fa fa-graduation-cap" aria-hidden="true"></i> Student
-          </a>
-          <a href="aboyt.html" id="about-btn" class="main-nav-btn">
-            <i class="fa fa-eye" aria-hidden="true"> </i> About
-          </a>
-        </nav>
-      </aside>
+            <nav class="navbar navbar-inverse visible-xs">
+              <a href="teacher.html" id="teacher-btn" class="main-nav-btn">
+                <i class="fa fa-tasks" aria-hidden="true"></i> Number of Postings
+              </a>
+              <a href="length.html" id="student-btn" class="main-nav-btn">
+                <i i class="fa fa-graduation-cap" aria-hidden="true"></i> Length of Postings
+              </a>
+              <a href="late.html" id="about-btn" class="main-nav-btn">
+                <i class="fa fa-eye" aria-hidden="true"> </i> Lateness
+              </a>
+              <a href="score.html" id="about-btn" class="main-nav-btn">
+                <i class="fa fa-btc" aria-hidden="true"> </i> Scores
+              </a>
+              <a href="lateVari.html" id="about-btn" class="main-nav-btn">
+                <i class="fa fa-clipboard" aria-hidden="true"> </i> Late Variation
+              </a>
+
+            </nav>
+        </aside>
     <section class = "main_section">
         <div class = "assignments_score" >
         <script src="//d3js.org/d3.v3.min.js"></script>
-        <script src='main.js'></script>
+        <script src="main.js"> </script>
         <script id = "assignment">
 
             // so we don't accidentally write things off of the canvas, give us a little breathing room
-            var margins = {top: 40, right: 20, bottom: 40, left: 20};
+            var margins = {top: 140, right: 20, bottom: 40, left: 20};
             // modifying these variables should neatly update everything else
-            var width = 2 * window.innerWidth;
-            var height = 5 * window.innerHeight;
+            var width =  window.innerWidth;
+            var height = 170;
             var txtWidth = 200;
             var visWidth = width - txtWidth;
 
             // color for late hours
-            var colorCalibration = ['#a50026','#d73027','#f46d43','f46d43','#fdae61','#fee08b','#ffffbf','#d9ef8b','a6d96a','66bd63','#1a9850','#006837'];
-            var colorScale = d3.scale.linear().domain([1,7]).range(["orange","steelblue"]);
-
+            var colorCalibration = ['#a50026','#930c28','#f46d43','#fdae61','#fee08b','#d9ef8b','#a6d96a','#66bd63','#1a9850','#006837'];
+            var colorScale = d3.scale.linear().domain([0,48]).range([d3.rgb("#d9ef8b"),d3.rgb("#006837")]);
+            var lateclolorScale = d3.scale.linear().domain([0,48]).range([d3.rgb("#fee08b"),d3.rgb("#a50026")]);
 
             var svg = d3.select('body').append('svg')
                 .attr('width', width + margins.left + margins.right)
@@ -99,54 +131,45 @@
             //   use something like <https://www.npmjs.com/package/http-server> or 
             //   Python's HTTP Server: `python -m SimpleHTTPServer`.
             // anonymous function here is a call back function and will execute after the d3.json function excuted 
+            var dataNested;
+            
             d3.json("" + path, function(error, data) {
-                updateVis(data);
-            });
-            function updateVis(data) {
-                // update the scales now that we know domain variables
                 x.domain(d3.range(0, data.assignments.length));
-                //the map() method creates a new array with the results of calling a provided function on every element in this array.
-                //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map?v=example
-                //this will simply generate a new array based on the old array assign sortable_name for each student to y axis
-                y.domain(
-                    data.students.map(
-                        function(d) {
-                         return d.sortable_name; 
-                        }
-                    )
-                );
-                // now, create a group for each student
-                // see <https://bost.ocks.org/mike/selection/> and <https://bost.ocks.org/mike/join/>
-                //   for information on how data joins work -- since we're only adding data, we jump straight to data().enter(); we don't care about updating existing data or removing old data.  
-                // We have to have a general .selectAll() before calling data, regardless.
-                var newStudents = svg.selectAll('g.student')
-                    //this data() function is really http://alignedleft.com/tutorials/d3/using-your-data
-                    .data(data.students).enter()
-                    .append('g')
-                        .attr('class', 'student')
-                        .attr('transform', function(student) { 
-                            return 'translate(0,' + y(student.sortable_name) + ')' //here the sortable_name is associated with the sortable_name stored in the memory
-                        });
-                // add a node to display the student's name
-                newStudents.append('text')
-                        .text(function(student) { return student.sortable_name + ' ' + student.id; })
-                        .style('fill','white');
-                // group the assignment vis together make a container to hold all the assignments for some student
-                var assignmentGrps = newStudents.append('g')
+                dataNested = getData(data.students);
+                createButton(dataNested, data);
+                updateVis(data);
+
+                
+            });
+
+            function createButton(dataNested, data) {
+                d3.select('body').append('div')
+                    .append('select')
+                        .on('change', change)
+                        .attr('class', 'selection')
+                    .selectAll('option')
+                    .data(dataNested[0].values)
+                    .enter()
+                    .append('option')
+                        .attr('value', function(d){
+                            return d.sortable_name})
+                        .text(function(d) {
+                            return d.sortable_name});
+                
+                var newStudent = d3.select('svg')
+                    .data(data.students[0].enter()
+                    .append('p')
                     .attr('class', 'assignments')
                     .attr('transform', 'translate(' + txtWidth+ ',0)');
-                // now, assign a group for every assignment (for every student, so this makes a 2D selection)
-                var assignments = assignmentGrps.selectAll('g.assignment')
-                    .data(function(student) { return student.grades; }).enter() // student is every element in students array
-                    //group all the assignments for each student in one group
+                console.log(newStudent);
+                var assignments = newStudent.selectAll('g.assignment')
+                    .data(function(student) { return student.grades; }).enter()
                     .append('g')
                         .attr('class', 'assignment')//name it assignment
                         .attr('transform', function(grade, i) {
-                            return 'translate(' + x(i) + ',0)';
-                });
-                // create a scale to manage the width of the rectangle, 
-                // which communicates the # of posts made for an assignment
-                var posts = d3.scale.linear()
+                            return 'translate(' + x(i) + ',-50)';
+                }); 
+                        var posts = d3.scale.linear()
                     .domain([0, 11])
                     .range([0, x.rangeBand()])
                     .clamp(false);
@@ -154,18 +177,28 @@
                 // draw this first so we can put text on top
                 var assignment = assignments.append('g')
                     .attr('class', 'score')
-
-                assignments.append('rect')
-                    .attr('y', -y.rangeBand() / 2 ) //arrange the position for the text
-                    .attr('height', y.rangeBand() / 1.5)
-                    .attr('width', function(student) { 
-                        return posts(student.posts.length); 
-                    })
-                    .style('fill', function(student){
-                        //return colorScale(d.posts.length);
-                        return colorCalibration[student.posts.length];
-                    })
-                
+                assignments.append('circle')
+                            .attr('r',width/200)
+                            .attr('transform', 'translate(5 , 0)' )
+                            .style('fill', function(assignment){
+                                if(assignment.late < 0 ) {
+                                    var ealierTime = Math.abs(assignment.late);
+                                    if(ealierTime > 48) {
+                                        ealierTime = 48;
+                                    }
+                                    return colorScale(ealierTime);
+                                }
+                                else{
+                                    var lateTime = assignment.late;
+                                    if(lateTime==0 && assignment.posts.length==0){
+                                        return '#434343';
+                                    }
+                                    if(lateTime > 48) {
+                                        lateTime = 48;
+                                    }
+                                    return lateclolorScale(lateTime);
+                                } 
+                            });
                
                
                 // the score for each assignment; color red if the assignment was late
@@ -182,29 +215,121 @@
                         return d.late > 0 ? 'times' : 'sans-serif';
                     })
 
-                    .text(function(d) { return d3.format(".2n")(d.score); })
-                    ;   //+ ' ' +  d.late + ' hr': d.score
+                    .text(function(d) { 
+                        //console.log(d);
+                        return d3.format(".1f")(d.score); })
+                    ;   //+ ' ' +  d.late + ' hr': d.score d3.format(".3n")  0.00
+            }
+            function getData(students) {
 
+
+                 return d3.nest().key(function (d) { return d.color; }).entries(students)
+            }
+
+            function updateVis(data) {
                 svg.append("g")
                     .attr("class", "x_axis")
                     .attr('transform', 'translate(' + txtWidth+ ',-20)')
-                    .call(xAxis)
-                    .style('fill', 'whilte')
-                    .text(function (d) {
-                        return data.assignments[d].id;
-                    });
+                    .style('fill','white')
+                    .call(xAxis);
+
+                svg.append("text")
+                    .attr('transform', 'translate(' +(width/2 + txtWidth)+ ',-100)')
+                    .attr('text-anchor', 'middle') 
+                    .attr('text-align', 'center')
+                    .style('font-size','30px')
+                    .style('fill','white')
+                    .text('Assignments Late Submissions HeatMap');
+
+                var  body = d3.select('body');
+                for(var i = 0; i<10; i++) {
+                body.append('div').attr('style',function(d){
+                        return 'background-color: ' + colorCalibration[9-i];
+                    })
+                    .attr('class','ramp')
+                    .attr('transform', 'translate(' +(width/2 + txtWidth)+ ',-100)');
                 
 
+                body.append('text')
+                    .attr('class', 'ramp')
+                    .attr('transform', 'translate(' +(width/2 + txtWidth)+ ',height)')
+                    .style('fill',colorCalibration[i])
+                    .text(
+                        function(d){
+                            var late4Hour = i+1;
+                            if( late4Hour >= 10 ){
+                                late4Hour = 10;
+                                return "Late > 48hr"
+                            }
+                            else{
+                                if(late4Hour >= 6 ) {
+                                    return "Late > " + d3.format(".1f")((i-1)*4.8) +'hr';
+                                }
+                                else{
+                                    return "Earlier < " + d3.format(".1f")((7-i)*4.8) +'hr';
+                                }
+                                
+                            }
+                        }
+                    );
+                }
+                
             }
-
-            function renderColorForLate() {
-
-            }
-            function login() {
+            function change(){
 
             }
-
         </script>
-    </div>
-      <script src="student.js"></script>
+         <!-- <table class="table-responsive">
+            <thead class='description' style="color:yellow; text-align: center; font-weight: bold">
+                <td>Task</td>
+                <td>Encodings</td>
+                <td>Defects</td>
+            </thead>
+            <tbody style="color:white; text-align: left; font-weight: bold">
+                <tr>
+                    <td style=" text-align: left; valign: top; whitespace: nowrap;">
+                    <ul>
+                        <li>For this visualization, the task is to show late submissions of each student and explore the pattern of submission for each students. Also, to explore the relation between score and lateness of submissions.
+                        </li>
+                    </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li>
+                            The x axis is the assignments throught the semester which could be encoding time or sequence of assignments
+                            </li>
+                            <li>
+                            The y axis is the alphabetical ordered students
+                            </li>
+                            <li>
+                            The exists of the circle can be used to encode the late submission information 
+                            </li>
+                            <li>
+                            The color of the circle is used to encode the lateness of submission or the early submission. This information could be utilized to explore the submission pattern of some specific student<span style="color: green"><em> (ex. always late or never start early)</em></span>, to explore the submission pattern for group of student through semester<span style="color: green"> <em> (ex. some students from same group tend to start earlier than other group, for initial submissions there exsit lot of lateness)</em></span>
+                            </li>
+                            <li>
+                            The score are provided with each circle as the assignment score encoded in the text. Along with the lateness encoded in color discussed before, this score can be utilized to explore the influence of lateness in scoring when compared to peers<span style="color: green"><em>(ex. some students have lateness still got high score which is not commen to see )</em></span>
+                            </li>
+                            <li>
+                            The color of the score is encoded for late submission information in which red is late submissions and yellow ones are regular submissions. This information could be used to explore teh pattern of lateness and the high contrast of color in red and black could be more easier to conclude how much portion of submissions a student have made.
+                            </li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            
+                            <li>
+                            One of the petential secondary task could be to find the lateness between groups. In order to do that, we need more information of group assignment for each posting of each student. This could be done with more time and more data filed in the data source. 
+                            </li>
+                            <li>
+                            Aggregated information of each student's score need to be provided to compare the lateness effect on the final score.    
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div> -->
+
+
 </section>

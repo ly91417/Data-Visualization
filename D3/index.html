@@ -39,8 +39,6 @@ file is only for the CS765 grading system Design chanllenge project.
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="main.css">
-        
-
     </head>
     
     <body>
@@ -65,30 +63,35 @@ file is only for the CS765 grading system Design chanllenge project.
         <aside id="perspective-nav">
             <nav class="navbar navbar-inverse visible-xs">
               <a href="teacher.html" id="teacher-btn" class="main-nav-btn">
-                <i class="fa fa-tasks" aria-hidden="true"></i> Teacher
+                <i class="fa fa-tasks" aria-hidden="true"></i> Number of Postings
               </a>
-              <a href="student.html" id="student-btn" class="main-nav-btn">
-                <i i class="fa fa-graduation-cap" aria-hidden="true"></i> Student
+              <a href="length.html" id="student-btn" class="main-nav-btn">
+                <i i class="fa fa-graduation-cap" aria-hidden="true"></i> Length of Postings
               </a>
-              <a href="about.html" id="about-btn" class="main-nav-btn">
-                <i class="fa fa-eye" aria-hidden="true"> </i> About
+              <a href="late.html" id="about-btn" class="main-nav-btn">
+                <i class="fa fa-eye" aria-hidden="true"> </i> Lateness
               </a>
+              <a href="score.html" id="about-btn" class="main-nav-btn">
+                <i class="fa fa-btc" aria-hidden="true"> </i> Scores
+              </a>
+              <a href="lateVari.html" id="about-btn" class="main-nav-btn">
+                <i class="fa fa-clipboard" aria-hidden="true"> </i> Late Variation
+              </a>
+
             </nav>
         </aside>
     <section class = "main_section">
     <div style>
         <h1 style="text-anchor: center; text-align: center; color:#fbaf41">The Design Principles</h1>
-        <p style="font-family: sans-serif; text-align:left; font-size:18px; color:#f5af41;">This System is designed for grading purpose for CS765 Data Visualization of UW-Madison students. The grading system use data of homework which including Discussion and Seek and Find two parts. For discussion tasks, students need to provide inforamtion about the homework and reading also the understanding of class material. The discussion task proceeds by finishing required several postings and a limited group of people randomly assigned will have acess to the postings and comments. The seek and find task is aming to present a good or not-that-good visualization from sources. And the critique need to be supplied with that.<br/>
-        <br/>
-        The sytstem has three views two of them are mostly used are: Teacher's perspective and Student's perspective. For teaher's view, the task is to:
+        <p style="font-family: sans-serif; text-align:left; font-size:18px; color:#f5af41;">This System is designed for grading purpose for CS 765 Data Visualization of UW-Madison students. The grading system use data of homework which including Discussion and Seek and Find two parts. For discussion tasks, students need to provide information about the homework and reading also the understanding of class material. The discussion task proceeds by finishing required several postings and a limited group of people randomly assigned will have access to the postings and comments. The seek and find task is aiming to present a good or visualization with defects. The goal of this program is to build a system visualize the students course data for CS 765 instructor. The tasks are:
+
         <div class="table-responsive">
             <table style="text-align:center;font-size:16x; color:#f5af41;" class="table">
                 
                 <thead style="font-size:20px; color:grey; font-weight: bold">         
                 <tr>
                     <td>#</td>
-                    <td><span><bold>Tasks for <em>Teacher's</em> View</bold></span></td>
-                    <td><span><bold>Implementation</bold></span></td>
+                    <td><span><bold>Tasks of the Grading System</bold></span></td>
                 </tr>
                 </thead>
                 <tbody>
@@ -105,76 +108,16 @@ file is only for the CS765 grading system Design chanllenge project.
                     <td>Compare late submission of postings for each assignment between students</td>
                     <td>Please clik the: <a href="late.html">the link</a></td>
                 </tr>
-                    <td>4</td>
+                <tr> <td>4</td>
                     <td>Show scores of assignments for each student</td>
                     <td>Please clik the: <a href="score.html">the link</a></td>
+                </tr>
                 <tr>
                     <td>5</td>
-                    <td>Show aggregated score of assignments for each student</td>
-                    <td>Please clik the: <a href="teacher.html">the link</a></td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td> Explore the data variation for each student through semester</td>
-                    <td>Please clik the: <a href="">the link</a></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <p style="font-family: sans-serif;  text-align:left; font-size:18px; color:#f5af41;"> <br/>For student's view, the task is to: </p>
-        <div class="table-responsive">
-            <table style="text-align:center;font-size:16x; color:#f5af41;" class="table">
-                
-                <thead style="font-size:20px; color:grey; font-weight: bold">         
-                <tr>
-                    <td>#</td>
-                    <td><span><bold>Tasks for <em>Student's</em> View</bold></span></td>
-                    <td><span><bold>Implementation</bold></span></td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Show scores of postings for each discussion and seek and find task for the student</td>
-                    <td>Please clik the: <a href="teacher.html">the link</a></td>
-                </tr>
-                    <td>2</td>
-                    <td>Show posting length of postings for each student and compare to peer condition</td>
-                    <td>Please clik the: <a href="teacher.html">the link</a></td>
-                <tr>
-                    <td>3</td>
-                    <td>Show all late submissions</td>
-                    <td>Please clik the: <a href="teacher.html">the link</a></td>
-                </tbody>
-            </table>
-        </div>
-        <p style="font-family: sans-serif; text-align:left; font-size:18px; color:#f5af41;"> <br/>
-        <span style="font-family: times; text-align:center; font-size:20x; color:#f5af41;"> For CS dean or the instructor, he/she may want to understand how the people are behaving during the semester and what is interesting pattern if any exsisting in the past semester. The task is to: </p>
-        <div class="table-responsive">
-            <table style="text-align:center;font-size:16x; color:#f5af41;" class="table">
-                
-                <thead style="font-size:20px; color:grey; font-weight: bold">         
-                <tr>
-                    <td>#</td>
-                    <td><span><bold>Tasks for <em>CS Dean's</em> View</bold></span></td>
-                    <td><span><bold>Implementation</bold></span></td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Explore the submission pattern for students' assignment</td>
-                    <td>Please clik the: <a href="late.html">the link</a></td>
-                </tr>
-                    <td>2</td>
-                    <td>Show posting lengths of Assignments and Variation through time</td>
-                    <td>Please clik the: <a href="length.html">the link</a></td>
-                <tr>
-                    <td>3</td>
-                    <td>Show all Scores of Students Assignments</td>
+                    <td>explore the late submissions patterns of each student </td>
                     <td>Please clik the: <a href="score.html">the link</a></td>
+                </tr>
                 </tbody>
             </table>
         </div>
-            <script src="main.js"></script>
         </section>
