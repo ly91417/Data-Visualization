@@ -22,6 +22,8 @@ https://docs.google.com/document/d/1upXnJ8Oh-nUnWOAXGYLU8QmI01b3_wiNmEbrwMYXXRM/
 
 Please use the http-server to open the web-browser to view.
 
+Some sampled output are listed here for review:
+
 ![ScreenShot](no_of_submission_heat.png)
 
 ![ScreenShot](score.png)
