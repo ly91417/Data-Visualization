@@ -24,15 +24,22 @@ Please use the http-server to open the web-browser to view.
 
 Some sampled output are listed here for review:
 
+### Assignments Number of Posting
+
 ![ScreenShot](submission_heat.png)
 
-
-
+### Score Overview
 
 ![ScreenShot](score.png)
 
+### Late Submission HeatMap
+
 ![ScreenShot](late_heat.png)
 
+### Number of Postings and Average Posting Length
+
 ![ScreenShot](ave_length.png)
+
+### Assignment Late Variation
 
 ![ScreenShot](late.png)
